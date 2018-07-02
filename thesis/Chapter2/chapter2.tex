@@ -1,0 +1,60 @@
+%*******************************************************************************
+%****************************** Second Chapter *********************************
+%*******************************************************************************
+
+\chapter{Introduction}
+\label{chap:introduction}
+\graphicspath{{Chapter2/Figs/}}
+
+\begin{chapabstract}
+Chapter \ref{chap:introduction} presents the overview of applying Machine Learning in Static Malware Detection on Windows operating systems; the motivation and the objectives of the thesis; list the related researches of authors either in Viet Nam or over the world; and the background.
+\end{chapabstract}
+
+\section{Overview}
+\label{sec:overview}
+
+Malware is software designed to infiltrate or harm a computer system without the owner's informed consent (section \ref{sec:malware}). A simple classification of malware is the recognizing malware files and clean files. Static malware detection is classifying samples as malicious or benign without executing them, in contrast to dynamic malware detection which detects malware based on its runtime behavior \cite{athiwaratkun2017malware, dahl2013large}. Although static malware detection is well-known to be undecidable in general \cite{cohen1987computer}, it is a critical layer in a security suite because when successful, it allows identifying malicious files before execution.
+
+Besides, machine learning is an attractive tool for either a first detection capability or additional detection heuristics (section \ref{ssec:machine-learning-intro}). Supervised learning models automatically find out complex relationships between file attributes in training data that are distinguishing between malicious and benign samples (section \ref{ssec:supervised-learning}). Moreover, machine learning models generalize to new dataset whose features and labels follow a similar pattern to the training data. 
+
+Additionally, in Windows operating systems, the general format for malware is Portable Executable (PE) format (section \ref{sec:pe-file}), which is the file format for executables, object code, DLLs, FON Font files, and others used in both 32-bit and 64-bit versions. The PE format encapsulates the information necessary for the Windows operating system loader to manage the wrapped executable code.
+
+Therefore, various machine learning-based static Portable Executable (PE) malware detectors have been proposed since at least 1995 \cite{kephart1995biologically}. Schultz et al. \cite{schultz2001data} represented PE files by features that included imported functions, strings, and byte sequences. Models included rules induced from RIPPER \cite{cohen1995fast}, Naive Bayes and an ensemble classifier. This approach was extended by Kolter et al. \cite{kolter2006learning} by including byte-level N-grams and techniques from natural language processing, including TFIDF weighting of strings. Shafiq et al. \cite{Shafiq2009AFF} proposed using just seven features from the PE header, driven by the fact that most malware applications in their study typically presented those elements. Saxe and Berlin used two-dimensional byte entropy histograms and a multi-layer neural network for classification \cite{saxe2015deep}.
+
+\section{Motivation}
+\label{sec:motivation}
+
+Although many models have performed prominent predictive accuracy, they were trained and validated on an imbalanced dataset because malware detection has not received the same attention in the open research community as other applications, where rich benchmark datasets exist. Legal restrictions are the primary challenge for releasing a benchmark dataset for malware detection, i.e., Saxe and Berlin are not able to release the data or code for their project due to its legal and proprietary nature \cite{saxe2015deep}. Additionally, unlike images, text and speech which may be labeled approximately instantly, and in many cases by a non-expert determining, whether a binary file is malicious or benign can be a time-consuming process for even the well-trained. The work of labeling may be automated via anti-malware, but the results may be proprietary or otherwise protected. Hence, these models may not impress with balanced data \cite{chawla2009data}.
+
+Furthermore, a productive method, which has impressive accuracy and very-low false positive rate, prevents the massive losses from malware, also gives a pleasant user experience and save resources for many organizations.
+
+\section{Objectives}
+\label{sec:objectives}
+
+As mentioned in section \ref{sec:motivation}, the result from many proposed approaches may not be impressive when evaluating with balanced data. Since the \textbf{primary objective} of this thesis is to \textbf{apply the machine learning methods in malware detection with an balanced dataset}. Additionally, the \textbf{expected objective} is to propose an method with \textbf{a high detection rate} and \textbf{an extremely low false alarm rate}. Ultimately, we aim the knowledge of machine learning and how to apply them to enhance the user information security in solving the malware detection problem. The detailed work that  we have done in this thesis includes:
+\begin{itemize}
+\item Study and build the background in information security, especially malware.
+\item Study and understand the fundamental knowledge in Machine  Learning including classification, decision tree algorithm, random forest algorithm, support vector machine algorithm, neural networks, and gradient-boosting decision tree algorithm. 
+\item Research and gain a detailed understanding of the gradient-boosting decision tree algorithm.
+\item Apply gradient-boosting decision tree algorithm in malware detection. Conduct some experiments to evaluate the performance of the model and optimize the parameters.
+\item Build a demo application with Windows ML which is the new platform released with Windows 10 April 2018 Update.
+\end{itemize}
+
+\section{Related Works}
+
+Malware detection has grown over the past several years, due to the more rising threat posed by malware to large businesses and governmental agencies. In Viet Nam, there are various public researches about malware detection and applying machine learning in malware detection. For examples, Assoc Prof. Dr. Vu Thanh Nguyen et al. proposed a combined approach of Negative Selection Algorithm and Artificial Immune Network for virus detection \cite{nguyen2014combination}, and the method for the metamorphic malware detection by Portable Executable (PE) Analysis with the Longest Common Sequence (LCS) \cite{vu2017metamorphic}; Dr. Van-Hau Pham, Nguyen Tan Cam and Ly Hoang Tuan published many researches related to malware detection in Android operating system \cite{pham2017eddleak, cam2017sensitive, tuan2017enhancing}; Nguyen Van Nhuong et al. proposed a semantic set method to detect metamorphic malware effectively \cite{van2014semantic}.
+
+Traditionally, the two essential approaches for malware detection can be approximately split based on the method that is used to analyze the malware, either static and dynamic analysis \cite{egele2012survey}.
+
+In theory, dynamic detection provides the direct view of malware action, is less vulnerable to obfuscation, and makes it harder to reuse existing malware \cite{moser2007limits}. However, in practice, malware can identify if it is running in a sandbox, prevent itself from performing the malicious behavior \cite{vidas2014evading}. This resulted in an arms race between dynamic behavior detectors and malware. Further, in many cases, malware does not execute correctly, due to missing dependencies or unexpected system configuration. These issues make it difficult to collect a dataset of malware behavior. Additional, in many cases, malware does not execute correctly, due to missing dependencies or unexpected system configuration.  These issues make it difficult to collect a dataset of malware behavior.
+
+In contrast, static analysis, is widely known to be undecidable \cite{cohen1987computer}, does not require complicated or expensive setup for gathering, and has enormous datasets can be created by aggregating the binaries files. These reasons make static malware detection very responsive to machine learning approaches, which tends to perform better as data size increases \cite{banko2001scaling}.
+
+As mentioned in section \ref{sec:overview}, several machine learning-based static malware detection programs have been introduced since at least 1995 \cite{kephart1995biologically}. Numerous static features have been proposed for extracting  features  from  binaries:  printable  strings \cite{schultz2001data}, import tables, opcodes, informational entropy, \cite{weber2002toolkit}, byte n-grams \cite{abou2004n}, two dimensional byte entropy histograms \cite{saxe2015deep}. Many other features have also been suggested during the Microsoft Malware Classification Challenge on Kaggle \cite{ronen2018microsoft}, such as opcode images, various decompiled assembly features, and aggregate statistics. In additional, inspired by the success of end-to-end deep learning models in image processing and natural language processing, Raff et al. introduced malware detection from raw byte sequences \cite{raff2017malware}. Maybe the state-of-the-art models will change to end-to-end deep learning models in the ensuing months or years, but hand-crafted features may continue to be relevant because of the structured format of malware.
+
+The feature space can become large, in those cases methods like locality-sensitive hashing \cite{bayer2009scalable}, feature hashing \cite{jang2011bitshred} or random projections \cite{fradkin2003experiments} have been applied in malware detection.
+
+Even after applying dimensionality reduction, there is still a large number of features, which can cause scalability issues for some machine learning algorithms, e.g., Support Vector Machine (SVM) and k-nearest neighbors (k-NN). Lately, neural networks have emerged as a scalable alternative due to significant advances in training algorithm \cite{almasi2016review}. Many approaches using neural networks have been introduced \cite{saxe2015deep, dahl2013large, kephart1995biologically, benchea2014combining} though it is not explicit how to compare results because of different datasets.
+
+Another popular alternative is the ensemble of trees, which can scale reasonably efficiently by subsampling the feature space during each iteration \cite{breiman2001random}. Decision trees can adapt well to various data types and are flexible to multiple scales of values in feature vectors, so they give good performance even without some data standardization.
+

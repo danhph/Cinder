@@ -1,0 +1,19 @@
+%*******************************************************************************
+%*********************************** First Chapter *****************************
+%*******************************************************************************
+
+\chapter{Problem Statement}
+\label{chap:problem-statement}
+\graphicspath{{Chapter1/Figs/}}
+
+\begin{chapabstract}
+Chapter \ref{chap:problem-statement} declares the problem statement, which includes the danger of malicious software, the overview about applying machine-learning based methods and especially the introduction about remaining limitations of applied methods, which is the reason for choosing the thesis topic.
+\end{chapabstract}
+ 
+ Malware is short for malicious software and is typically used as a catch-all term to refer to any software designed to cause damage to a single computer, server, or computer network \cite{moir2003defining}.  A single incident of malware can cause millions of dollars in damage, e.g., zero-day ransomware WannaCry has caused world-wide catastrophe, from knocking U.K. National Health Service hospitals offline to shutting down a Honda Motor Company in Japan \cite{chen2017automated}. Furthermore, malware is getting more sophisticated and more varied each day \cite{shahi2009technology}. Accordingly, the detection of malicious software is an essential problem in cybersecurity, especially as more of society becomes dependent on computing systems.
+
+The past generation of malware detection products typically uses rule-based or signature-based approaches, which require analysts to handcraft rules that reason over relevant data to make detections. This approach has high accuracy. However, these rules are generally specific, and usually unable to recognize new malware even if it uses the same functionality. For this reason, the need for machine learning-based detection arises. Machine learning algorithms learn the underlying patterns from a given training set, which includes both malicious and benign samples. These underlying patterns discriminate malware from benign code. Since Schultz et al. \cite{schultz2001data} first applied machine learning methods to malware detection, machine learning has grown to be one of the most popular and influential tools in the quest to secure systems. 
+
+Some approaches to machine learning have yielded overly aggressive models that demonstrate remarkable predictive accuracy, yet give way to false positives. False positives create negative user experiences that prevent new protection from deploying. According to a survey of IT administrators in 2017 \cite{jonathan2017survey}, 42 percent of companies assume that their users lost productivity as an issue of false-positive results, which creates a choke point for IT administrators in the business life cycle. Security engineers also find these false alarms disruptive when they are working to detect and eliminate malware. A report published in 2015 also shows that many organizations in the United States consumed massive amounts of money on dealing with inaccurate malware warnings \cite{eduard2015false}. Hence, even if a solution has the highest detection rate, if it has a high number of false positives, it is as useless as a solution with low false positives and a moderate detection rate.
+
+We proceeded to the topic "Malware Detection using Machine Learning in Windows operating systems" with the expectation of contributing innovative method to solve the problem of identifying malicious software with acceptable accuracy and low false positive rate.
