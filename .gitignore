@@ -28,7 +28,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -62,3 +63,13 @@ Temporary Items
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+# PyCharm
+.idea/
+
+# EMBER dataset
+ember/
+ember_dataset.tar.bz2
+
+# Log files
+*.log
