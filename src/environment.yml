@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+dependencies:
+  - python==3.6.5
+  - matplotlib
+  - numpy
+  - scipy
+  - scikit-learn
+  - pip:
+    - lief
+    - lightgbm
+    - tqdm
