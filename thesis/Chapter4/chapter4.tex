@@ -2,17 +2,35 @@
 \graphicspath{{Chapter4/Figs/}}
 
 \begin{chapabstract}
-This chapter describes how to extract features from Portable Executable files, the Gradient Boosting Decision Trees model we used, and the reasoning behind.
+This chapter describes the issues of using imbalanced Dataset, feature extraction methods, the proposed Gradient Boosting Decision Trees model, and the reasoning behind.
 \end{chapabstract}
+
+\section{The Issues of using Imbalanced Dataset}
+
+Most of the related work use the imbalanced dataset \cite{saxe2015deep,vu2017metamorphic}. 
+For examples, Saxe and Berlin used the dataset of 431,926 binaries which consists 350,016 malicious files \cite{saxe2015deep}, Vu Thanh Nguyen et al. used the dataset of 9690 files which only has 300 benign files \cite{vu2017metamorphic}. 
+In fact, the number of malicious files is often much more massive than the number of benign files because almost benign binaries are often protected by the copyright laws which do not allow for sharing. 
+This makes malware identification problem become different from other machine learning classification problems, which commonly have fewer samples in important classes. 
+Further, the size of the dataset is usually not large enough because the malware analysis and data labeling are consuming processes that required well-trained security engineers. 
+There are also many risks in publishing a large dataset that includes malicious binaries. 
+
+Using imbalanced datasets can make validation metrics misleading.
+For examples, with 96.9\% of data is malicious files, a model that labels all samples as malware achieves 96.9\% accuracy, 96.9\% precision (P), 100\% recall (R) and 0.9843 F-score ($F =  2PR / (P + R) $ \cite{chinchor1992muc}).
+It also gives way to false positives, which cause negative user experiences.
+According to a survey of IT administrators in 2017, 42 percent of companies assume that their users lost productivity as an issue of false-positive results, which creates a choke point for IT administrators in the business life cycle \cite{jonathan2017survey}.
+
 
 \section{Feature Extraction}
 \label{sec:feature-extraction}
 
-Inspired by Hyrum S. Anderson and Phil Roth from Endgame, Inc. \cite{anderson2018ember}, we extracted each PE file into eight feature groups which can be classified into two types: format-agnostic features and parsed features.
+By using the simple feature extraction methods inspired by the EMBER dataset owners rather than raw binary files, collecting data is not affected by privacy policies and it is much easier to get a balanced dataset.
+By conducting many experiments, we decrease the feature dimension by 30 percent (1711 instead of 2351) to reduce the training time but still manage to achieve a better evaluation result.
+In detail, we extracted each Portable Executable file into eight feature groups which can be classified into two types: format-agnostic features and parsed PE features.
+File-format agnostic feature groups decrease privacy concerns while parsed PE feature groups encapsulates the information related to executable code.
 
 \subsection{Format-agnostic Features}
 
-We use three groups of features to model the contents of input files in a file-format agnostic way, meaning that it has no dependencies on its format. By providing the simple statistical summaries rather than a listing of raw features, e.g., all bytes or all strings, we decrease privacy concerns and are easy to request or publish the dataset.
+We use three groups of features to model the contents of input files in a file-format agnostic way, meaning that it has no dependencies on its format.
 
 \subsubsection{Byte-Entropy Histogram}
 
@@ -63,5 +81,3 @@ Firstly, the massive number of features causes scalability issues for many machi
 Secondly, our resources, primarily financial support, are lacking. But the cost for training neural networks is extremely computationally expensive. We tried with some complex models, and these take many hours and require costly more GPUs for speeding. Also, neural networks are the black-box that not much can be gleaned from and required much experience to optimize.
 
 Besides, another scalable alternative, tree ensemble algorithms handle very well high dimensional feature spaces as well as a large number of training examples. The two most popular algorithms are Random Forests and Gradient Boosting Decision Trees (GDBT). GBDT training usually takes longer because trees are built sequentially. However, benchmark results have shown GBDT are better learners than Random Forests.
-
-In practice, in our experiments, Gradient Boosting Decision Trees algorithm always takes less training time in comparing to neural networks with the same hardwares.
