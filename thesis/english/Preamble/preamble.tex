@@ -201,10 +201,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[vietnamese,english]{babel}
 
-\newenvironment{chapabstract}
-{
-  \begin{center} \large \bfseries Chapter Abstract \end{center}
+\makeatletter
+\newenvironment{chapabstract} {
+  \begin{center}
+  {\large \bfseries Chapter Abstract}
+  \end{center}
   \list{}{
+    \setlength{\topsep}{-10mm}
     \setlength{\leftmargin}{10mm}% <---------- CHANGE HERE
     \setlength{\rightmargin}{\leftmargin}%
   }%
@@ -212,5 +215,4 @@
   \endlist
 }
 {\par \vspace*{5mm}}
-
 \makeatother
