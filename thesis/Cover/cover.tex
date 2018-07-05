@@ -1,7 +1,15 @@
 \pdfbookmark[0]{Cover}{label:cover-page}%
 \begin{titlepage}
 
-\begin{changemargin}{-35mm}{-20mm}
+\newgeometry{top=15mm,bottom=30mm,left=5mm,right=25mm,
+hmarginratio=1:1,vmarginratio=1:1,bindingoffset=5mm}
+
+\thisfancypage{
+\setlength{\fboxsep}{15pt}
+\doublebox
+}{}
+
+% \begin{changemargin}{-35mm}{-20mm}
 
 \begin{center}
   
@@ -33,6 +41,7 @@
 \textbf{\large HO CHI MINH CITY, 2018}
 \end{center}
 
-\end{changemargin}
+% \end{changemargin}
 \end{titlepage}
 \cleardoublepage
+

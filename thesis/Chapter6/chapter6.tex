@@ -11,27 +11,19 @@ Over the course of doing this thesis, we have spent a good amount of time studyi
 
 We have learned and distinguished static and dynamic malware detetion. We have also analyzed the technical detail and meaning of features used in proposed static malware detectors. Understanding them is important both for understanding the state-of-the-art methods and for building and optimizing classifiers.
 
-We have proposed a method for static PE malware detection using Gradient Boosting Decision Trees. We conduct many experiments to study the feasibility of our method and to find ways to improve the current results. The experimental results are shown in Firgure \ref{fig:roc_curve_with_highlights}, where it can be seen that our final model achieve better results in comparing to many published approaches.
+We present and optimize a static malware detection method using hand-crafted features derived from parsing the PE files and Gradient Boosting Decision Trees (GBDT), a widely-used powerful machine learning algorithm.
+We manage to reduce the training time by appropriately reducing the feature dimension. 
+In detail, rather than using raw binary files, our proposed method uses the statistical summaries to decrease the privacy concerns of various benign files and makes it easy to request the balanced dataset. 
 
-\subsection{Future Works}
+The experiment results show that our proposed method can achieve up to 99.394\% detection rate at 1\% false alarm rate, and score results in less than 0.1\% false alarm rate at a detection rate 97.572\%, based on more than 600,000 training and 200,000 testing samples from EMBER dataset \cite{anderson2018ember}.
 
-The study conducted in this project was a proof-of-concept, and we can identify some future developments related to the practical implementation.
+\section{Future Works}
 
-\subsubsection{Use an other wider dataset}
+The study conducted in this project was a proof-of-concept, and we can identify some future developments related to the practical implementation:
 
-Although the used dataset is broad, covering most of the malware species, it does not include all possible kinds, and it belongs to only one source.  Collecting a dataset is a task that requires a lot of time and effort, especially in malware detection domain. With using format-agnostic features, we hope to receive more samples from security organizations in future. 
-
-\subsubsection{Implement the approach in local computer}
-
-We tried to implement the model with ONNX format and Windows ML format but it was not success because the preview version of Windows ML is changed rapidly and has many limits. We plan to build a demonstration application to propose that machine learning-based malware detectors can run smoothly in personal computer.
-
-\subsubsection{Reduce the feature space}
-
-One of our optimization methods is reducing the dimension of the feature vector, and there is possible to do better in future. An input feature vector with smaller size will boost the model in the limited-resource environment of a personal computer. 
-
-\subsubsection{Conduct experiments with other algorithms}
-
-
-There are various tree-based methods, and some of them are proved better than the traditional Gradient Boosting Decision Trees in other domains. Conducting experiments may give us a better model than the one we proposed.
-
+\begin{enumerate}
+    \item \textbf{Reduce the feature space. } There is possible to reduce the dimension of feature vectors. Input vectors with smaller size boost the model and take less training time. 
+    \item \textbf{Use other datasets. } Although the EMBER dataset is broad, covering most of the malware species, it does not include all possible kinds. Collecting a dataset is a task that requires a lot of time and efforts, especially in malware detection domain. With using format-agnostic features, we can receive more samples from security organizations in future. 
+    \item \textbf{Implement the approach in local computer. } We tried to implement the model with ONNX format and Windows ML format but it was not success because the preview version of Windows ML is changed rapidly and has many limits. We plan to build a demonstration application to propose that machine learning-based malware detectors can run smoothly in personal computer.
+\end{enumerate}
 
