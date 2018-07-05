@@ -3,11 +3,12 @@
 \renewcommand{\abstractname}{Executive Summary}
 
 \begin{abstract}
-Static malware detection is an essential layer in a security suite, which attempts to classify samples as malicious or benign before execution. 
-However, most of the related works incur the scalability issues, for examples, methods using neural networks usually take a lot of training time \cite{raff2017malware}, or use imbalanced datasets \cite{saxe2015deep,vu2017metamorphic}, which makes validation metrics misleading in reality.
+Phát hiện mã độc tĩnh là một lớp cần thiết trong các hệ thống bảo mật, nó cố gắng phân loại các mẫu là độc hại hoặc lành tính trước khi thực thi chúng.
+Tuy nhiên, hầu hết các nghiên cứu liên quan gặp các vấn đề về khả năng mở rộng, ví dụ, các phương pháp sử dụng neural networks thường mất rất nhiều thời gian đào tạo \cite{raff2017malware} hoặc sử dụng các tập dữ liệu mất cân bằng \cite{saxe2015deep,vu2017metamorphic}, làm cho các số liệu đánh giá bị gây hiểu nhầm trong thực tế.
 
-In this study, we research the two essential approaches for malware detection (i.e., static and dynamic analysis) and conduct experiments to apply the machine learning methods in static malware detection. 
-Furthermore, we propose a static malware detection method by Portable Executable analysis and Gradient Boosting Decision Tree algorithm. 
-We manage to reduce the training time by appropriately reducing the feature dimension. 
-The experiment results show that our proposed method can achieve up to 99.394\% detection rate at 1\% false alarm rate, and score results in less than 0.1\% false alarm rate at a detection rate 97.572\%, based on more than 600,000 training and 200,000 testing samples from Endgame Malware BEnchmark for Research (EMBER) dataset \cite{anderson2018ember}.
+Trong nghiên cứu này, chúng tôi tìm hiểu về cả hai phương pháp nhận diện mã độc trên hệ điều hành Windows: phát hiện mã độc tính (static malware detection) và phát hiện mã độc động (dynamic malware detection). 
+Chúng tôi tiến hành các thí nghiệm để áp dụng các phương pháp học máy trong phát hiện mã độc tĩnh. 
+Hơn nữa, chúng tôi đề xuất phương pháp phát hiện phần mềm độc hại tĩnh sử dụng Portable Executable analysis và thuật toán học máy Gradient Boosting Decision Tree. 
+Chúng tôi tập trung vào việc giảm thời gian đào tạo bằng cách giảm số lượng tính năng một cách thích hợp.
+Các kết quả thử nghiệm cho thấy phương pháp đề xuất của chúng tôi có thể đạt được tỷ lệ phát hiện lên tới 99,394 \% với tỷ lệ cảnh báo sai là 1\%, và khi giới hạn tỷ lệ báo động giả dưới 0,1\% thì tỷ lệ phát hiện là 97,572 \%, dựa trên hơn 600.000 mẫu đào tạo và 200.000 mẫu kiểm thử từ bộ dữ liệu Endgame Malware BEnchmark for Research (EMBER) \cite{anderson2018ember}.
 \end{abstract}
