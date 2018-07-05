@@ -1,0 +1,29 @@
+\chapter{Conclusion} 
+\label{chap:conclusion}
+
+\begin{chapabstract}
+Chapter \ref{chap:conclusion} presents the results of this thesis, including what we have learned and achieved through the experiments. The chapter closes with our proposal for future work.
+\end{chapabstract}
+
+\section{Results}
+
+Over the course of doing this thesis, we have spent a good amount of time studying about Malware Detection and Machine Learning, including Neural Networks and Gradient Boosting Decision Trees, to acquire essential malware knowledge. 
+
+We have learned and distinguished static and dynamic malware detetion. We have also analyzed the technical detail and meaning of features used in proposed static malware detectors. Understanding them is important both for understanding the state-of-the-art methods and for building and optimizing classifiers.
+
+We present and optimize a static malware detection method using hand-crafted features derived from parsing the PE files and Gradient Boosting Decision Trees (GBDT), a widely-used powerful machine learning algorithm.
+We manage to reduce the training time by appropriately reducing the feature dimension. 
+In detail, rather than using raw binary files, our proposed method uses the statistical summaries to decrease the privacy concerns of various benign files and makes it easy to request the balanced dataset. 
+
+The experiment results show that our proposed method can achieve up to 99.394\% detection rate at 1\% false alarm rate, and score results in less than 0.1\% false alarm rate at a detection rate 97.572\%, based on more than 600,000 training and 200,000 testing samples from EMBER dataset \cite{anderson2018ember}.
+
+\section{Future Works}
+
+The study conducted in this project was a proof-of-concept, and we can identify some future developments related to the practical implementation:
+
+\begin{enumerate}
+    \item \textbf{Reduce the feature space. } There is possible to reduce the dimension of feature vectors. Input vectors with smaller size boost the model and take less training time. 
+    \item \textbf{Use other datasets. } Although the EMBER dataset is broad, covering most of the malware species, it does not include all possible kinds. Collecting a dataset is a task that requires a lot of time and efforts, especially in malware detection domain. With using format-agnostic features, we can receive more samples from security organizations in future. 
+    \item \textbf{Implement the approach in local computer. } We tried to implement the model with ONNX format and Windows ML format but it was not success because the preview version of Windows ML is changed rapidly and has many limits. We plan to build a demonstration application to propose that machine learning-based malware detectors can run smoothly in personal computer.
+\end{enumerate}
+

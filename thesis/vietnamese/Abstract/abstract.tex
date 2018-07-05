@@ -1,0 +1,13 @@
+% ************************** Thesis Abstract *****************************
+% Use `abstract' as an option in the document class to print only the titlepage and the abstract.
+\renewcommand{\abstractname}{Executive Summary}
+
+\begin{abstract}
+Static malware detection is an essential layer in a security suite, which attempts to classify samples as malicious or benign before execution. 
+However, most of the related works incur the scalability issues, for examples, methods using neural networks usually take a lot of training time \cite{raff2017malware}, or use imbalanced datasets \cite{saxe2015deep,vu2017metamorphic}, which makes validation metrics misleading in reality.
+
+In this study, we research the two essential approaches for malware detection (i.e., static and dynamic analysis) and conduct experiments to apply the machine learning methods in static malware detection. 
+Furthermore, we propose a static malware detection method by Portable Executable analysis and Gradient Boosting Decision Tree algorithm. 
+We manage to reduce the training time by appropriately reducing the feature dimension. 
+The experiment results show that our proposed method can achieve up to 99.394\% detection rate at 1\% false alarm rate, and score results in less than 0.1\% false alarm rate at a detection rate 97.572\%, based on more than 600,000 training and 200,000 testing samples from Endgame Malware BEnchmark for Research (EMBER) dataset \cite{anderson2018ember}.
+\end{abstract}
