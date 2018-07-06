@@ -2,28 +2,30 @@
 \label{chap:conclusion}
 
 \begin{chapabstract}
-Chapter \ref{chap:conclusion} presents the results of this thesis, including what we have learned and achieved through the experiments. The chapter closes with our proposal for future work.
+Chương \ref{chap:conclusion} trình bày các kết quả của khóa luận, bao gồm những gì chúng tôi đã học và đạt được thông qua các thực nghiệm. Chương này kết thúc với đề xuất của chúng tôi cho công việc nghiên cứu trong tương lai.
 \end{chapabstract}
 
 \section{Kết quả đạt được}
 
-Over the course of doing this thesis, we have spent a good amount of time studying about Malware Detection and Machine Learning, including Neural Networks and Gradient Boosting Decision Trees, to acquire essential malware knowledge. 
+Trong quá trình thực hiện luận án này, chúng tôi đã dành rất nhiều thời gian nghiên cứu về Phát hiện mã độc và Học máy, bao gồm các mạng Neural Networks và Gradient Boosting.
+Chúng tôi đã học được và phân biệt cách phát hiện phần mềm độc hại tĩnh và động.
+Chúng tôi cũng đã phân tích chi tiết kỹ thuật và ý nghĩa của các tính năng được sử dụng trong các phương pháp phát hiện phần mềm độc hại.
+Việc hiểu chúng là quan trọng cho cả việc hiểu các phương pháp state-of-the-art lẫn việc xây dựng và tối ưu hóa các tham số.
 
-We have learned and distinguished static and dynamic malware detetion. We have also analyzed the technical detail and meaning of features used in proposed static malware detectors. Understanding them is important both for understanding the state-of-the-art methods and for building and optimizing classifiers.
+Chúng tôi trình bày và tối ưu hóa một phương pháp phát hiện phần mềm độc hại tĩnh sử dụng các tính năng được tạo thủ công bắt nguồn từ việc phân tích cú pháp các tệp PE và thuật toán Gradient Boosting Decision Trees (GBDT), một thuật toán học máy mạnh mẽ được sử dụng phổ biến trong thời gian gần đây.
+Chúng tôi cố gắng để giảm thời gian đào tạo bằng cách giảm kích thước tính năng một cách thích hợp.
+Thay vì sử dụng các tệp nhị phân thô, phương pháp được đề xuất của chúng tôi sử dụng các thống kê đơn gian để giảm mối quan tâm về quyền riêng tư của các tệp lành tính khác nhau và giúp dễ dàng yêu cầu tập dữ liệu cân bằng.
 
-We present and optimize a static malware detection method using hand-crafted features derived from parsing the PE files and Gradient Boosting Decision Trees (GBDT), a widely-used powerful machine learning algorithm.
-We manage to reduce the training time by appropriately reducing the feature dimension. 
-In detail, rather than using raw binary files, our proposed method uses the statistical summaries to decrease the privacy concerns of various benign files and makes it easy to request the balanced dataset. 
+Kết quả thực nghiệm cho thấy phương pháp đề xuất của chúng tôi có thể đạt tới 99,394\% tỷ lệ phát hiện ở tỷ lệ báo động giả 1\% và với tỉ lệ báo động sai dưới 0,1\%, mô hình đạt tỷ lệ phát hiện 97,572\%, dựa trên hơn 600.000 mẫu đào tạo và 200.000 mẫu thử từ bộ dữ liệu EMBER \cite{anderson2018ember}.
 
-The experiment results show that our proposed method can achieve up to 99.394\% detection rate at 1\% false alarm rate, and score results in less than 0.1\% false alarm rate at a detection rate 97.572\%, based on more than 600,000 training and 200,000 testing samples from EMBER dataset \cite{anderson2018ember}.
+\section{Hướng phát triển}
 
-\section{Future Works}
-
-The study conducted in this project was a proof-of-concept, and we can identify some future developments related to the practical implementation:
+Nghiên cứu được tiến hành trong dự án này là một minh chứng khái niệm (proof-of-concept), chúng tôi có thể xác định một số hướng phát triển trong tương lai:
 
 \begin{enumerate}
-    \item \textbf{Reduce the feature space. } There is possible to reduce the dimension of feature vectors. Input vectors with smaller size boost the model and take less training time. 
-    \item \textbf{Use other datasets. } Although the EMBER dataset is broad, covering most of the malware species, it does not include all possible kinds. Collecting a dataset is a task that requires a lot of time and efforts, especially in malware detection domain. With using format-agnostic features, we can receive more samples from security organizations in future. 
-    \item \textbf{Implement the approach in local computer. } We tried to implement the model with ONNX format and Windows ML format but it was not success because the preview version of Windows ML is changed rapidly and has many limits. We plan to build a demonstration application to propose that machine learning-based malware detectors can run smoothly in personal computer.
+    \item \textbf{Giảm không gian đặc trưng. } Có thể giảm kích thước của vectơ đặc trưng. Các vectơ đầu vào có kích thước nhỏ hơn có thể làm tăng độ chính xác cho mô hình và mất ít thời gian đào tạo hơn.
+    \item \textbf{Sử dụng những bộ dữ liệu khác. } 
+    Mặc dù tập dữ liệu EMBER rộng, bao gồm hầu hết các loài phần mềm độc hại, nhưng nó không bao gồm tất cả các loại có thể. Thu thập tập dữ liệu là một tác vụ đòi hỏi nhiều thời gian và công sức, đặc biệt là trong lĩnh vực phát hiện phần mềm độc hại. Với việc sử dụng các tính năng không có định dạng, chúng tôi có thể nhận được nhiều mẫu hơn từ các tổ chức bảo mật trong tương lai.
+    \item \textbf{Triển khai phương pháp tiếp cận trong máy tính cục bộ. } Chúng tôi đã cố gắng triển khai mô hình với định dạng ONNX và nền tảng Windows ML nhưng không thành công vì phiên bản thử ngfhieejm của Windows ML thay đổi nhanh chóng và có nhiều giới hạn. Chúng tôi dự định xây dựng một ứng dụng trình diễn để cho thấy rằng các bộ công cụ phát hiện phần mềm độc hại dựa trên học máy có thể chạy tốt trong máy tính cá nhân.
 \end{enumerate}
 
