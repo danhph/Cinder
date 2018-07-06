@@ -119,11 +119,11 @@ Model                      & \begin{tabular}[c]{@{}c@{}}False Alarm Rate\\ (FPR)
 \section{Hướng dẫn cài đặt môi trường} 
 \label{sec:research-env}
 
-We mainly use the cross-platform tools in research and development for easily switching between operating systems. We use a Windows 10 Pro virtual machine for static malware analysis, an Ubuntu 16.04 LTS cloud instance for training and testing machine learning models, and use PyCharm Professional as mainly Integrated development environment (IDE).
+Chúng tôi chủ yếu sử dụng các công cụ đa nền tảng trong nghiên cứu và phát triển để dễ dàng chuyển đổi giữa các hệ điều hành. Chúng tôi sử dụng máy ảo Windows 10 Pro để phân tích phần mềm độc hại tĩnh, một máy ảo Ubuntu 16.04 LTS cho các mô hình đào tạo và thử nghiệm máy và sử dụng PyCharm Professional làm môi trường phát triển tích hợp (IDE).
 
 \subsection{Windows environment for static analysis}
 
-We use a virtual machine to build a background about malware:
+Chúng tôi sử dụng máy ảo để xây dựng nền tảng kiến thức về phần mềm độc hại:
 
 \begin{itemize}
 \item OS: Microsoft Windows 10 Pro
@@ -131,26 +131,26 @@ We use a virtual machine to build a background about malware:
 \item Architecture: 64-bit
 \end{itemize}
 
-With following tools, we can easily gather malware basic information:
+Với các công cụ sau, chúng tôi có thể dễ dàng thu thập thông tin cơ bản về phần mềm độc hại:
 
 \begin{itemize}
  \item \textbf{CFF Explorer}: PE header parser.
- \item \textbf{PE Explorer} (from Heaventools Software): PE inspection tool.
- \item \textbf{BinText} (from McAfee): extract string from a binary.
- \item \textbf{HxD Hex Editor}: support for viewing file in binary format.
+ \item \textbf{PE Explorer} (Heaventools Software): PE inspection tool.
+ \item \textbf{BinText} (McAfee): trích xuất chuỗi từ tệp nhị phân.
+ \item \textbf{HxD Hex Editor}: hỗ trợ xem tệp ở định dạng nhị phân.
 \end{itemize}
 
 \subsection{Ubuntu environment for machine learning tasks}
 
 \subsubsection{Google Cloud Platform}
 
-We use an virtual machine for research, that can be deployed with the image from \textit{\href{https://console.cloud.google.com/launcher/details/ubuntu-os-cloud/ubuntu-xenial}{Cloud Launcher - Canonical - Ubuntu Xenial}}. The cloud instance has 24 virtual CPUs, 32 GB for memory, and is located in \verb|asia-southeast1-b| zone, i.e., Jurong West, Singapore.
+Chúng tôi sử dụng một máy ảo để nghiên cứu, có thể được triển khai từ \textit{\href{https://console.cloud.google.com/launcher/details/ubuntu-os-cloud/ubuntu-xenial}{Cloud Launcher - Canonical - Ubuntu Xenial}}. Ví dụ trên đám mây có 24 CPU ảo, 32 GB cho bộ nhớ và được đặt tại \verb|asia-southeast1-b| zone, cụ thể là Jurong West, Singapore.
 
-After deployment, we add two optional firewall rules (\textit{\href{https://console.cloud.google.com/networking/firewalls/add}{VPC network - Firewall rules - Create a firewall rule}}), which allows all in and out connections for the virtual machine, to use Python Interactive Console features in PyCharm IDE.
+Sau khi triển khai, chúng tôi thêm hai quy tắc tường lửa tùy chọn (\textit{\href{https://console.cloud.google.com/networking/firewalls/add}{VPC network - Firewall rules - Create a firewall rule}}), cho phép tất cả các kết nối vào và ra cho máy ảo, để sử dụng Python Interactive Console features trong PyCharm IDE.
 
 \subsubsection{Anaconda}
 
-We choose Anaconda, a free and open source distribution of the Python, to manage package and deploy. The content of \verb|environment.yml| used to deploy is shown below. 
+Chúng tôi chọn Anaconda, một bản phân phối mã nguồn mở và miễn phí của Python, để quản lý gói và triển khai. Nội dung của tệp \verb|environment.yml| được sử dụng để triển khai được hiển thị bên dưới. 
 
 \begin{lstlisting}
 name: lab
@@ -167,10 +167,10 @@ dependencies:
     - lightgbm
 \end{lstlisting}
 
-The environment is created with \textbf{Python 3.6} and packages for machine learning:
+Môi trường được tạo ra với \textbf{Python 3.6} và các gói hỗ trợ cho việc học máy:
 
 \begin{itemize}
-\item \textbf{NumPy}: the fundamental package for scientific computing with Python.
+\item \textbf{NumPy}:gói cơ bản cho các tính toán khoa học với Python.
 \item \textbf{Matplotlib}: a Python 2D plotting library.
 \item \textbf{Scikit-learn}: a machine learning library.
 \item \textbf{Lief}: library to instrument executable formats.
@@ -180,6 +180,7 @@ The environment is created with \textbf{Python 3.6} and packages for machine lea
 
 \subsection{PyCharm Professional IDE}
 
-JetBrains provides \textit{\href{https://www.jetbrains.com/student/}{free individual licenses for students}} to use PyCharm Professional IDE. This is the powerful Python IDE, which gives us remote development capabilities and supports many scientific tools (e.g., Anaconda, Matplotlib and NumPy).
+JetBrains cung cấp \textit{\href{https://www.jetbrains.com/student/}{giấy phép cá nhân miễn phí cho sinh viên sử dụng PyCharm Professional IDE}}.
+Đây là IDE Python mạnh mẽ, mang lại cho chúng ta khả năng phát triển từ xa và hỗ trợ nhiều công cụ khoa học (ví dụ, Anaconda, Matplotlib và NumPy).
 
-Following the guide \textit{\href{https://www.jetbrains.com/help/pycharm/configuring-remote-interpreters-via-ssh.html}{Configuring Remote Interpreters via SSH}} published by JetBrains, we can run, debug remotely from a cloud instance, which gives a great performance and is easy to scale.
+Làm theo hướng dẫn \textit{\href{https://www.jetbrains.com/help/pycharm/configuring-remote-interpreters-via-ssh.html}{Configuring Remote Interpreters via SSH}} xuất bản bởi JetBrains, chúng ta có thể chạy, gỡ lỗi từ xa từ máy ảo trên đám mây, mang lại hiệu suất tuyệt vời và dễ dàng mở rộng.
