@@ -1,83 +1,82 @@
-\chapter{Proposed Method}
+\chapter{Phương Pháp Đề Xuất}
 \graphicspath{{Chapter4/Figs/}}
 
 \begin{chapabstract}
-This chapter describes the issues of using imbalanced Dataset, feature extraction methods, the proposed Gradient Boosting Decision Trees model, and the reasoning behind.
+Chương này mô tả các vấn đề về việc sử dụng các tập dữ liệu mất cân bằng, các phương pháp trích xuất đặc trung, mô hình Gradient Boosting Decision Trees được đề xuất và lý do đằng sau.
 \end{chapabstract}
 
-\section{The Issues of using Imbalanced Dataset}
+\section{Các vấn đề về sử dụng tập dữ liệu không cân bằng}
 
-Most of the related work use the imbalanced dataset \cite{saxe2015deep,vu2017metamorphic}. 
-For examples, Saxe and Berlin used the dataset of 431,926 binaries which consists 350,016 malicious files \cite{saxe2015deep}, Vu Thanh Nguyen et al. used the dataset of 9690 files which only has 300 benign files \cite{vu2017metamorphic}. 
-In fact, the number of malicious files is often much more massive than the number of benign files because almost benign binaries are often protected by the copyright laws which do not allow for sharing. 
-This makes malware identification problem become different from other machine learning classification problems, which commonly have fewer samples in important classes. 
-Further, the size of the dataset is usually not large enough because the malware analysis and data labeling are consuming processes that required well-trained security engineers. 
-There are also many risks in publishing a large dataset that includes malicious binaries. 
+Hầu hết các nghiên cứu liên quan sử dụng bộ dữ liệu mất cân bằng \cite{saxe2015deep,vu2017metamorphic}. 
+Ví dụ, Saxe và Berlin đã sử dụng tập dữ liệu của 431.926 tệp nhị phân bao gồm 350.016 tệp độc hại \cite{saxe2015deep}, Vũ Thanh Nguyên và các cộng sự đã sử dụng tập dữ liệu của 9690 tệp nhưng chỉ có 300 tệp lành tính \cite{vu2017metamorphic}. 
+Trên thực tế, số lượng tệp độc hại thường lớn hơn nhiều so với số lượng tệp lành tính vì hầu hết các tệp nhị phân lành tính thường được bảo vệ bởi luật bản quyền không cho phép chia sẻ.
+Điều này làm cho vấn đề nhận diện phần mềm độc hại trở nên khác với các vấn đề phân loại học máy khác vì thường có ít mẫu hơn trong các lớp quan trọng.
+Hơn nữa, kích thước của tập dữ liệu thường không đủ lớn vì việc phân tích phần mềm độc hại và ghi nhãn dữ liệu là các quy trình tốn thời gian và yêu cầu các kỹ sư bảo mật được đào tạo tốt.
+Bên cạnh đó, cũng có nhiều rủi ro trong việc xuất bản tập dữ liệu lớn bao gồm các tệp nhị phân độc hại.
 
-Using imbalanced datasets can make validation metrics misleading.
-For examples, with 96.9\% of data is malicious files, a model that labels all samples as malware achieves 96.9\% accuracy, 96.9\% precision (P), 100\% recall (R) and 0.9843 F-score ($F =  2PR / (P + R) $ \cite{chinchor1992muc}).
-It also gives way to false positives, which cause negative user experiences.
-According to a survey of IT administrators in 2017, 42 percent of companies assume that their users lost productivity as an issue of false-positive results, which creates a choke point for IT administrators in the business life cycle \cite{jonathan2017survey}.
-
+Sử dụng bộ dữ liệu không cân bằng có thể làm cho các số liệu xác thực gây hiểu lầm.
+Ví dụ, với 96.9\% dữ liệu là các tệp độc hại, một mô hình đánh dấu tất cả các mẫu là phần mềm độc hại đạt được độ chính xác 96.9\% accuracy, 96.9\% precision (P), 100\% recall (R) và 0.9843 F-score ($F =  2PR / (P + R) $ \cite{chinchor1992muc}).
+Nó cũng nhường chỗ cho những dự báo sai, gây ra trải nghiệm người dùng tiêu cực.
+Theo một cuộc khảo sát của các quản trị viên CNTT trong năm 2017, 42\% các công ty cho rằng người dùng của họ bị mất năng suất là một vấn đề của kết quả dương tính giả, tạo ra một điểm nghẹt thở cho các quản trị viên CNTT trong môi trường doanh nghiệp \cite{jonathan2017survey}.
 
 \section{Feature Extraction}
 \label{sec:feature-extraction}
 
-By using the simple feature extraction methods inspired by the EMBER dataset owners rather than raw binary files, collecting data is not affected by privacy policies and it is much easier to get a balanced dataset.
-By conducting many experiments, we decrease the feature dimension by 30 percent (1711 instead of 2351) to reduce the training time but still manage to achieve a better evaluation result.
-In detail, we extracted each Portable Executable file into eight feature groups which can be classified into two types: format-agnostic features and parsed PE features.
-File-format agnostic feature groups decrease privacy concerns while parsed PE feature groups encapsulates the information related to executable code.
+Bằng cách sử dụng các phương pháp trích xuất đặc trưng đơn giản chứ không phải tệp nhị phân thô, việc thu thập dữ liệu không bị ảnh hưởng bởi chính sách bảo mật và dễ dàng hơn để có được tập dữ liệu cân bằng.
+Bằng cách thực hiện nhiều thử nghiệm, chúng tôi giảm kích thước đặc trưng xuống 30\% (1711 thay vì 2351) để giảm thời gian đào tạo nhưng vẫn đạt được kết quả đánh giá tốt hơn.
+Cụ thể, chúng tôi trích xuất từng tệp PE thành tám nhóm đặc trưng có thể được phân loại thành hai loại: đặc trưng định dạng bất khả tri (format-agnostic features) và đặc trưng PE được phân tích cú pháp (parsed PE features).
+Các nhóm Format-agnostic Feature làm giảm mối quan tâm về quyền riêng tư trong khi các nhóm parsed PE feature đóng gói thông tin liên quan đến mã thực thi.
 
 \subsection{Format-agnostic Features}
 
-We use three groups of features to model the contents of input files in a file-format agnostic way, meaning that it has no dependencies on its format.
+Chúng tôi sử dụng ba nhóm đặc trưng để mô hình hóa nội dung của tệp đầu vào độc lập theo định dạng tệp, có nghĩa là nó không phụ thuộc vào định dạng của tệp.
 
 \subsubsection{Byte-Entropy Histogram}
 
-Based on the work published by Joshua Saxe and Konstantin Berlin \cite{saxe2015deep}, they show that, in practice, the effect of representing byte values in the entropy context in which they occur separates byte values that arise in the context of, for example, x86 instruction data from, for example, byte values occurring in compressed data.
+Dựa trên những nghiên cứu của Joshua Saxe và Konstantin Berlin \cite{saxe2015deep}, họ chỉ ra rằng, trong thực tế, hiệu quả của việc tái thể hiện byte value trong ngữ cảnh entropy mà nó xảy ra sẽ phân tách các byte value ra khỏi bối cảnh chung, ví dụ, dữ liệu x86 instruction data  được phân tách từ dữ liệu nén.
 
-To compute the byte-entropy histogram, we slide a 2048-length window over all the input bytes with a step size of 1024 bytes. Use a simple trick to calculate the entropy $H$ faster, i.e., reducing the information by half, and pairing it with each byte within the window. Then, we compute a two-dimensional histogram with $16 \times 16$ bins that quantize entropy and the byte value. Finally, we concatenate each row vector in the matrix and normalize the final 256-value vector.
+Để tính byte-entropy histogram, chúng tôi trượt một cửa sổ 2048-length trên toàn bộ byte đầu vào với bước nhảy 1024 byte. Sử dụng một mẹo đơn giản để tính toán entropy $H$ nhanh hơn, cụ thể, giảm đi một nữa lượng thông tin, và bắt cặp nó với từng byte trong window. Sau đó, chúng tôi tính một histogram 2 chiều với $16 \times 16$ bins chứa entropy và byte value. Cuối cùng, chúng tôi cộng các vector hàng trong ma trận và chuẩn hóa để có một 256-value vector.
 
 \subsubsection{Byte Histogram}
 
-The byte histogram is a 256-value vector which represents the distribution of each byte value within the file.
+Byte histogram là một 256-value vector đại diện cho phân phối của từng giá trị byte trong tệp.
 
 \subsubsection{String Information}
 
-The final format-agnostic group of features is string information. These features are derived from the printable sequences of characters in the range \verb|0x20| to \verb|0x7f|, that have at least five characters long. We use the number of strings, the average length of these strings, the amounts of lines  that may sequentially indicate a path (begin with \verb|C:\|), an URL(start with \verb|http://| or \verb|https://|), a registry key (the occurrences of \verb|HKEY_|) and a bundled executable (the short string \verb|MZ|). Also, we use a histogram of the printable characters within these strings.
+Nhóm các đặc trưng định dạng bất khả tri cuối cùng là thông tin chuỗi. Các đặc trưng này được trích xuất từ những chuỗi các kí tự in được trong khoảng \verb|0x20| đến \verb|0x7f|, và phải có ít nhất 5 kí tự. Chúng tôi sử dụng số lượng chuỗi, độ dài trung bình của các chuỗi, số lượng các chuỗi có khả năng là đường dẫn (bắt đầu với \verb|C:\|), địa chỉ web (bắt đầu với \verb|http://| hoặc \verb|https://|), a registry key (sự xuất hiện của \verb|HKEY_|) và một file thực thi được nén (chuỗi \verb|MZ|). Ngoài ra, chúng tôi sử dụng histogram của các ký tự có thể in trong các chuỗi này.
 
 \subsection{Parsed Features}
 
-In addition to using three format-agnostic groups of features, we extract five other groups from parsing the Portable Executable file by using LIEF - Library to Instrument Executable Formats \cite{lief}.
+Ngoài việc sử dụng ba nhóm đặc trưng định dạng bất khả tri, chúng tôi trích xuất năm nhóm khác từ phân tích tệp PE bằng cách sử dụng LIEF - Library to Instrument Executable Formats \cite{lief}.
 
 \subsubsection{General Information}
 
-The set of features includes the file size and necessary information collected from the PE header: the virtual size of the file, the number of imported and exported functions, the number of symbols, whether the data has a debug section, thread local storage, resources, relocations, or a signature.
+Đây là tập hợp các đặc trưng bao gồm file size và những thông tin cần thiết khác từ PE header:  virtual size, số lượng imported và exported functions, số lượng symbols, dữ liệu có hay không debug section, thread local storage, resources, relocations, hoặc signature.
 
 \subsubsection{Header Information}
 
-We use the information from the Common Object File Format (COFF) header including the timestamp in the header, the target machine and a list of image characteristics. And from the optional header, we use the target subsystem, DLL  characteristics,  the file magic as a string, major and minor image versions, linker versions, system versions and subsystem versions, and the code size, header size and commit size. We use hashing trick with 10 bins for string features \cite{weinberger2009feature}.
+Chúng tôi sử dụng thông tinh từ Common Object File Format (COFF) header bao gồm timestamp, target machine và danh sách image characteristics. Từ optional header, chúng tôi dùng target subsystem, DLL characteristics, file magic, major và minor image versions, linker versions, system versions và subsystem versions, code size, header size và commit size. Chúng tôi sử dụng hashing trick với 10 bins có các đặc trưng dạng chuỗi \cite{weinberger2009feature}.
 
 \subsubsection{Imported Functions}
 \label{sssec:imported}
 
-Parsing the import address table gives us a report about the imported functions by libraries. We use the set of unique libraries with 128-bin hashing trick. Similarly, we apply the 512-bin hashing trick to capture individual functions, by representing
-it in string format \verb|library:function|, for example, \verb|kernel32.dll:CreateFileMappingA|.
+Phân tích import address table cho chúng ta một báo cáo về các hàm được import bởi các thư viện.
+Chúng tôi sử dụng tập hợp các thư viện với hashing trick 128-bin và áp dụng hashing 512-bin để ghi lại các function riêng lẻ, bằng cách biểu diễn dưới định dạng chuỗi \verb|library:function|, ví dụ, \verb|kernel32.dll:CreateFileMappingA|.
 
 \subsubsection{Exported Functions}
 
-Similar to extracting imported functions, we summarize a list of the exported functions into a 128-value vector by hashing.
+Tương tự như cách trích xuất imported function, chúng tôi thống kê một danh sách các exported function vào một 128-value vector bằng cách hashing.
 
 \subsubsection{Section Information}
 
-Properties of each section are used: the name, size, entropy, virtual size, and a list of strings representing section characteristics. We still use the hashing trick on \verb|(section name, value)| pairs to create 50-value vectors containing section size, section entropy, virtual size, and information about entry point characteristics.
+Thuộc tính của từng section được sử dụng: name, size, entropy, virtual size, và một danh sách các chuỗi thể hiện characteristics của section.Chúng tôi vẫn sử dụng hashing trick trên các cặp \verb|(section name, value)| để tạo ra những 50-value vector chứa section size, section entropy, virtual size, và thông tin về entry point characteristics.
 
 \section{Classification}
  
-For classification, in this study, we use the Gradient Boosting Decision Trees algorithm with 400 iterations and 64 leaves in one tree. We configure that there must be at least 200 samples in one child, and set learning rate at 5 percent. We elaborate on the reasoning behind these choices below.
+Trong nghiên cứu này, we đề xuất sử dụng thuật toán Gradient Boosting Decision Trees với 400 iterations và 64 lá mỗi cây. Chúng tôi cấu hình rằng phải có ít nhất 200 mẫu ở một nút và đặt tỷ lệ học tập là 5 phần trăm. Chúng tôi giải thích về lý do đằng sau những lựa chọn dưới đây.
 
-Firstly, the massive number of features causes scalability issues for many machine learning algorithms.  For example,  non-linear  SVM  kernels require $O(N^2)$ multiplication during each iteration, and k-Nearest Neighbors (k-NN) requires significant computation and storage of all label samples during prediction. Accordingly, we target to use neural networks and ensemble decision trees, which are scalable alternatives.
+Thứ nhất, số lượng lớn các đặc trưng gây ra các vấn đề về khả năng mở rộng cho nhiều thuật toán học máy. Ví dụ, non-linear SVM kernels yêu cầu $O(N^2)$ phép nhân trong mỗi lần lặp, và k-Nearest Neighbors (k-NN) yêu cầu một lượng tính toán đáng kể và lưu trữ tất cả các mẫu nhãn trong khi dự đoán. Do đó, chúng tôi tập trung vào việc sử dụng neural networks và ensemble decision trees, đó là lựa chọn thay thế có thể mở rộng.
 
-Secondly, our resources, primarily financial support, are lacking. But the cost for training neural networks is extremely computationally expensive. We tried with some complex models, and these take many hours and require costly more GPUs for speeding. Also, neural networks are the black-box that not much can be gleaned from and required much experience to optimize.
+Thứ hai, nguồn lực của chúng tôi, chủ yếu là hỗ trợ tài chính, rất ít. But chi phí cho việc đào tạo neural networks cực kỳ tốn kém tính toán. Các mô hình phức tạp mất nhiều giờ và đòi hỏi nhiều GPU hơn để tăng tốc. Ngoài ra, neural networks là hộp đen và yêu cầu nhiều kinh nghiệm để tối ưu hóa.
 
-Besides, another scalable alternative, tree ensemble algorithms handle very well high dimensional feature spaces as well as a large number of training examples. The two most popular algorithms are Random Forests and Gradient Boosting Decision Trees (GDBT). GBDT training usually takes longer because trees are built sequentially. However, benchmark results have shown GBDT are better learners than Random Forests.
+Bên cạnh đó, các thuật toán tree ensemble xử lý các không gian đặc trưng lớn rất tốt, cũng như xử lí tốt một số lượng lớn các mẫu đào tạo. Hai thuật toán phổ biến là Random Forests và Gradient Boosting Decision Trees (GDBT). Đào tạo GBDT thường mất nhiều thời gian hơn vì cây được xây dựng theo tuần tự. Tuy nhiên, kết quả cho thấy GBDT tốt hơn so với Random Forests.
