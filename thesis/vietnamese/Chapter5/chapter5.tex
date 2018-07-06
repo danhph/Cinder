@@ -1,49 +1,55 @@
-\chapter{Experiment and Evaluation}
+\chapter{Thực Nghiệm và Đánh Giá}
 \graphicspath{{Chapter5/Figs/}}
 
 \begin{chapabstract}
 Firstly, we introduce the dataset used for training and evaluating in our experiments. We also present the evaluation metrics and explain the reason for choosing those criteria. Then, the experiment results are shown in comparing to other proposed models. Finally, we present how to set up the environments for experiments.
 \end{chapabstract}
 
-\section{Dataset}
+\section{Tập dữ liệu}
 \label{sec:dataset}
 
-In our experiment, we use 600,000 labeled training samples and 200,000 testing samples from Endgame Malware BEnchmark for Research (EMBER) dataset \cite{anderson2018ember}.
+Trong thử nghiệm của chúng tôi, chúng tôi sử dụng 600.000 mẫu đào tạo được dán nhãn và 200.000 mẫu thử nghiệm từ tập dữ liệu Endgame Malware BEnchmark for Research (EMBER) \cite{anderson2018ember}.
 
 \begin{figure}[H] 
 \centering
 \includegraphics[width=0.5\textwidth]{dataset.png}
-\caption{Distribution of samples in the dataset.}
+\caption{Phân phối mẫu trong tập dữ liệu.}
 \label{fig:ember}
 \end{figure}
  
-The EMBER dataset is the sizeable public dataset for malware detection which must include benign files and have an ideal ratio of malicious and benign files for machine learning tasks. This will solve the common problem of predictive accuracy, i.e., it will be misleading when the data is imbalanced. 
+Tập dữ liệu EMBER là tập dữ liệu công khai lớn để phát hiện phần mềm độc hại, nó bao gồm các tệp lành tính và có tỷ lệ lý tưởng các tệp độc hại và lành tính cho các tác vụ học máy. Điều này sẽ giải quyết vấn đề chung về độ chính xác dự đoán, cụ thể là vấn đề gây hiểu lầm khi dữ liệu bị mất cân bằng.
 
-\section{Evaluation Criteria}
+\section{Tiêu chí Đánh giá}
 
-As discussed in section \ref{sec:objectives}, the goal of the thesis is to find a machine learning-based malware detection method that operates at a low false positive rate while tries to achieve a high detection rate.
+Như đã thảo luận trong phần \ref{sec:objectives}, mục tiêu của nghiên cứu là tìm ra phương pháp phát hiện phần mềm độc hại dựa trên học máy hoạt động ở tỷ lệ dương giả thấp trong khi cố gắng đạt được tỷ lệ phát hiện cao.
 
-\subsection{False Alarm Rate}
+\subsection{Tỷ lệ Báo động sai}
 
-False positives, or false alarms, happen when a detector mistakes a malicious label for a benign file. We intend to make the false positive rate as low as possible, which is untypical for machine learning application. It is important because even one false alarm in a thousand benign files can create severe consequences for users. This problem is complicated by the fact that there are lots of clean files in the world, they keep appearing, and it is more challenging to collect these files. We evaluate the accuracy of our method at two specific false alarm rate values: at less than 0.1\%, and at less than 1\%.
+Sai tích cự (False positive), hoặc báo động sai, xảy ra khi một mô hình sai lầm gán một nhãn độc hại cho một tập tin lành tính. 
+Chúng tôi có tập trung làm cho tỷ lệ dương tính giả càng thấp càng tốt, đó là việc không điển hình trong ứng dụng học máy. 
+Điều quan trọng là bởi vì ngay cả một báo động giả trong một nghìn tập tin lành tính có thể tạo ra hậu quả nghiêm trọng cho người dùng. 
+Vấn đề này là phức tạp bởi thực tế là có rất nhiều tập tin sạch trên thế giới, chúng tiếp tục xuất hiện, và rất khó khăn để thu thập các tập tin này. Chúng tôi đánh giá phương pháp của chúng tôi với hai giá trị báo động giả, cụ thể: ở mức dưới 0,1\% và ở mức dưới 1\%.
 
 \begin{center}
     ${False\ alarm\ rate} =  \cfrac{\sum False\ positive}{\sum Condition\ negative}$
 \end{center}
 
-\subsection{Detection Rate}
+\subsection{Tỷ lệ Phát hiện}
 
-The detection rate, (eqv. with recall or true positive rate), measures the ratio of malicious programs detected out of the malware files used for testing. With higher recall, fewer actual cases of malware go undetected. In other words, the true positive rate shows the potential of how unseen binaries that were detected.
+Tỷ lệ phát hiện, (tương đương với recall hoặc true positive rate), đo tỷ lệ các chương trình độc hại được phát hiện trong các tệp phần mềm độc hại được sử dụng để thử nghiệm. Với tỉ lệ cao hơn, ít trường hợp phần mềm độc hại trong thực tế không bị phát hiện. Nói cách khác, tỷ lệ phát hiện cho thấy tiềm năng của các tệp nhị phân độc hại mới sẽ được phát hiện.
 
 \begin{center}
     ${Detection\ rate} =  \cfrac{\sum True\ positive}{\sum Condition\ positive}$
 \end{center}
 
-\subsection{Area Under the ROC curve}
+\subsection{Diện tích dưới đường cong ROC}
 
-As introduced in section \ref{ssec:auroc}, the Area Under the ROC curve, AUROC or AUC for short, provides an aggregate measure of performance across all possible classification thresholds. AUC is scale-invariant and measures how well predictions are ranked, rather than their absolute values. Besides, AUC is classification-threshold-invariant, so that it can measure the quality of the predictions irrespective of what threshold is chosen. A model whose predictions are 100\% wrong has an AUC of 0.0, and the one whose predictions are 100\% correct has an AUC of 1.0.
+Như đã giới thiệu trong phần \ref{ssec:auroc}, phần Diện tích dưới đường cong ROC (Area Under the ROC curve, viết tắt là AUROC hoặc AUC) cung cấp thước đo tổng thể về hiệu suất trên tất cả các ngưỡng phân loại có thể có.
+AUC là quy mô bất biến và đo lường dự đoán được xếp hạng tốt như thế nào, chứ không phải là giá trị tuyệt đối của chúng.
+Bên cạnh đó, AUC là bất biến với ngưỡng phân loại, để nó có thể đo lường chất lượng của các dự đoán không phụ thuộc vào ngưỡng nào được chọn.
+Một mô hình có dự đoán là 100\% sai có AUC là 0,0, và có một dự đoán là 100\% đúng có AUC là 1,0.
 
-A rough guide for classifying the accuracy of a classification test is the typical academic point system: 
+Hệ thống điểm học thuật điển hình để phân loại độ chính xác của bài kiểm tra phân loại như sau:
 
 \begin{itemize}
 \item 0.9 - 1.0 = Excellent
@@ -53,9 +59,9 @@ A rough guide for classifying the accuracy of a classification test is the typic
 \item 0.5 - 0.6 = Fail
 \end{itemize}
 
-\section{Experimental Results}
+\section{Kết quả Thực nghiệm}
 
-The proposed GBDT-based malware detection method is implemented with LightGBM framework \cite{ke2017lightgbm}, and the input feature vectors have dimension of 1711. All our experiments were run on an instance which has 24 vCPUs and 32 GB memory. Using parallel programming, it took about 10 minutes to vectorize the raw features and about 5 minutes to train the model. The ROC curve of the final model is shown in Figure \ref{fig:roc_curve_with_highlights} and the distribution of scores for testing samples is shown in Figure \ref{fig:score_dist}.
+Phương pháp phát hiện phần mềm độc hại dựa trên GBDT được đề xuất được triển khai với LightGBM framework \cite{ke2017lightgbm}, và các vectơ đặc trưng đầu vào có kích thước 1711. Tất cả các thử nghiệm của chúng tôi đều chạy trên một máy tính ảo hóa có 24 vCPUs và bộ nhớ 32 GB. Sử dụng lập trình song song, mất khoảng 10 phút để vector hóa các tính năng thô và khoảng 5 phút để đào tạo mô hình. Đường cong ROC của mô hình cuối cùng được thể hiện trong hình \ref{fig:roc_curve_with_highlights} và phân phối điểm số cho các mẫu thử được thể hiện trong hình \ref{fig:score_dist}.
 
 \begin{figure}[H]
 \centering
@@ -64,19 +70,19 @@ The proposed GBDT-based malware detection method is implemented with LightGBM fr
 \label{fig:roc_curve_with_highlights}
 \end{figure}
 
-\begin{figure}[H] 
+\begin{figure}[h] 
 \centering
 \includegraphics[width=\textwidth]{score_dist.png}
 \caption{The distribution of scores for testing samples}
 \label{fig:score_dist}
 \end{figure}
 
-The area under ROC curve exceeds $0.999678$, which means that almost all the predictions are correct. With a threshold of $0.828987$, the model score results in less than $0.1\%$ false alarm rate at a detection rate $97.5720\%$. At less than $1\%$ false positive rate, the model exceeds $99.3940\%$ detection rate with a threshold of $0.307897$. 
+Diện tích dưới đường cong ROC đạt mức $0.999678$. Với threshold $0.828987$, điểm kết quả của mô hình khi ít hơn $0.1\%$ tỉ lệ báo động sai có tỉ lệ phát hiện $97.5720\%$. Và với mức tỉ lệ báo động sai $1\%$, mô hình đạt tỉ lệ phát hiện $99.3940\%$ với threshold là $0.307897$. 
 
-The baseline model has only the area under the ROC curve of $0.99911$, score results in less than $0.1\%$ FPR at TPR exceeding $92.99\%$, and at less than $1\%$ FPR, it exceeds $98.2\%$ TPR. Our model has better performance because of hyper-parameter tuning, and it also takes less time for training as a result of reducing feature space. Evidently, the model has better performance than the MalConv model trained on the raw binaries \cite{anderson2018ember}, which has ROC AUC is $0.99821$, corresponding to a $92.2\%$ TPR at a FPR less than 0.1\%, and a 97.3\% TPR at a less than 1\% FPR. Table \ref{table:training-time} and Table \ref{table:results} show the training time and evaluation results of our proposed model in comparison with MalConv model and the dataset owners’ baseline model.
+Mô hình cơ sở của EMBER chỉ có diện tích dưới đường cong ROC là $0.99911$, kết quả với mức $0.1\%$ FPR là $92.99\%$ TPR, và mức $1\%$ FPR, là $98.2\%$ TPR. Mô hình của chúng tôi có hiệu suất tốt hơn do điều chỉnh siêu tham số và cũng mất ít thời gian hơn cho việc đào tạo do giảm số lượng các đặc trưng.Rõ ràng, mô hình có hiệu suất tốt hơn so với mô hình MalConv được đào tạo trên các tệp nhị phân thô \cite{anderson2018ember}, nó có ROC AUC là $0.99821$, tương ứng với $92.2\%$ TPR ở mức báo động sai dưới 0.1\%, và 97.3\% TPR ở mức dưới 1\% FPR. Bảng \ref{table:training-time} và bảng \ref{table:results}hiển thị thời gian đào tạo và kết quả đánh giá của mô hình đề xuất của chúng tôi so với mô hình MalConv và mô hình cơ sở của EMBER.
 
 \begin{table}[H]
-\caption{The training time of our proposed model in comparison with MalConv model and the dataset owners’ baseline model}
+\caption{Thời gian đào tạo của mô hình được đề xuất của chúng tôi so với mô hình MalConv và mô hình cơ sở của EMBER}
 \centering
 \label{table:training-time}
 \begin{tabular}{l l l l}
@@ -85,13 +91,13 @@ Model & Input &  Specifications & Training time \\
 \hline
 MalConv & Raw binaries & \begin{tabular}[c]{@{}l@{}} 2 NVDIA TITAN X \\ (Pascal) GPUs \end{tabular}  & \begin{tabular}[c]{@{}l@{}}10 days\\ (25 hours/epoch)\end{tabular}  \\
 EMBER & 2351-value vectors & \begin{tabular}[c]{@{}l@{}} 8 vCPUs \\ (2015 MacBook Pro i7)\end{tabular}  & 20 hours \\ 
-Our model & \textbf{1711}-value vectors & \begin{tabular}[c]{@{}l@{}} 24 vCPUs \\ (Google Compute Engine) \end{tabular}  & \textbf{10 minutes }\\ 
+Our model & \textbf{1711}-value vectors & \begin{tabular}[c]{@{}l@{}} 24 vCPUs \\ (Google Compute Engine) \end{tabular}  & \textbf{5 minutes }\\ 
 \hline 
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
-\caption{The evaluation results of our proposed model in comparison with MalConv model and the dataset owners’ baseline model}
+\caption{Kết quả đánh giá của mô hình được đề xuất của chúng tôi so với mô hình MalConv và mô hình cơ sở của EMBER}
 \centering
 \label{table:results}
 \begin{tabular}{l c c c}
@@ -110,7 +116,7 @@ Model                      & \begin{tabular}[c]{@{}c@{}}False Alarm Rate\\ (FPR)
 \end{tabular}
 \end{table}
 
-\section{Environment Setup Guide} 
+\section{Hướng dẫn cài đặt môi trường} 
 \label{sec:research-env}
 
 We mainly use the cross-platform tools in research and development for easily switching between operating systems. We use a Windows 10 Pro virtual machine for static malware analysis, an Ubuntu 16.04 LTS cloud instance for training and testing machine learning models, and use PyCharm Professional as mainly Integrated development environment (IDE).
