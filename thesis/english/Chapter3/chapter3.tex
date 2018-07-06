@@ -53,7 +53,7 @@ A Portable Executable file consists of some headers and sections that tell the d
 \label{fig:pe32bit}
 \end{figure}
 
-PE sections contain code and initialized data that the Windows loader is to map into executable or readable/writeable memory pages, individually, as well as imports, exports, and resources defined by the file. Each section contains a header that specifies the size and address. An import address table instructs the loader which functions to import statically. A resources section may contain resources such as required for user interfaces: cursors, fonts, bitmaps, icons, menus, etc. A basic PE file would commonly contain a .text code section and one or more data sections (.data, .rdata or .bss). Relocation tables are typically stored in a .reloc section, used by the Windows loader to reassign a base address from the executable’s preferred base. A .tls section contains special thread local storage (TLS) structure for storing thread-specific local variables. Section names are random from the perspective of the Windows loader, but specific names have been adopted by precedent and are overwhelmingly common.
+PE sections contain code and initialized data that the Windows loader is to map into executable or readable/writeable memory pages, individually, as well as imports, exports, and resources defined by the file. Each section contains a header that specifies the size and address. An import address table instructs the loader which functions to import statically. A resources section may contain resources required for user interfaces such as: cursors, fonts, bitmaps, icons, menus, etc. A basic PE file would commonly contain a .text code section and one or more data sections (.data, .rdata or .bss). Relocation tables are typically stored in a .reloc section, used by the Windows loader to reassign a base address from the executable’s preferred base. A .tls section contains special thread local storage (TLS) structure for storing thread-specific local variables. Section names are random from the perspective of the Windows loader, but specific names have been adopted by precedent and are overwhelmingly common.
 
 \section{Machine Learning}
 
@@ -126,7 +126,7 @@ Boosting is an ensemble technique in which the models are not made sequentially.
 As it assumes from the name, decision trees are data structures that have a structure of the tree. The training dataset is used for the creation of the tree, that is consequently used for making predictions on the test data. In this algorithm, the goal is to achieve the most accurate result with the least number of the decisions that must be made. We can use decision trees can for both classification and regression problems. There is an example in Table \ref{table:decision-tree}.
 
 \begin{table}[h]
-\caption{An example of decesion tree}
+\caption{An example of decision tree}
 \centering
 \label{table:decision-tree}
 \begin{tabular}{c l l c c c c}
@@ -143,8 +143,8 @@ Id & Name                       & Sex    & Age  & SibSp & Survived \\
 
 \begin{figure}[htbp!] 
 \centering    
-\includegraphics[width=0.5\textwidth]{decesion_tree.png}
-\caption{An example of decesion tree \cite{wikidecesiontree}}
+\includegraphics[width=0.5\textwidth]{decision_tree.png}
+\caption{An example of decision tree \cite{wikidecisiontree}}
 \label{fig:decision-tree}
 \end{figure}
 
