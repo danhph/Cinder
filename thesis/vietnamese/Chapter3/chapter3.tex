@@ -198,14 +198,15 @@ Random forest cũng có thể được mô tả như một thuật toán vững 
 \subsection{Gradient Boosting Decision Trees}
 \label{ssec:gbdt}
 
-Gradient Boosting Decision Tree (GDBT) is an ensemble model of decision trees, which are trained in sequence \cite{friedman2001greedy}. 
-In each iteration, GBDT learns the decision trees by fitting the negative gradients (also known as residual errors).
-The main cost in GBDT lies in learning the decision trees, and the most time-consuming part of learning a decision tree is to find the best split points.
-One of the most common algorithms to find split points is the pre-sorted algorithm \cite{mehta1996sliq, shafer1996sprint}, which lists all possible split points on the pre-sorted feature values. 
-This algorithm is simple and can find the optimal split points.
-However, it is wasteful in both training speed and memory consumption. Another famous algorithm is the histogram-based
+Gradient Boosting Decision Tree (GDBT) là một mô hình ensemble của decision trees được đào tạo theo trình tự \cite{friedman2001greedy}. 
+Trong mỗi lần lặp lại, GBDT học các cây quyết định bằng cách fitting the negative gradients (còn được biết là residual errors).
+Chi phí chính trong GBDT nằm trong việc huấn luyện cây quyết định, và phần tốn nhiều thời gian nhất để huấn luyện một cây quyết định là tìm ra các điểm phân chia tốt nhất.
+Một trong những thuật toán phổ biến nhất để tìm các điểm phân tách là pre-sorted algorithm \cite{mehta1996sliq, shafer1996sprint}, trong đó liệt kê tất cả các điểm phân tách có thể có trên các giá trị đặc trưng được sắp xếp trước.
+Thuật toán này rất đơn giản và có thể tìm ra các điểm phân chia tối ưu.
+Tuy nhiên, nó là lãng phí trong cả tốc độ đào tạo và mức tiêu thụ bộ nhớ.
+Một thuật toán nổi tiếng khác là histogram-based
 algorithm \cite{ranka1998clouds, jin2003communication, li2008mcrank}. 
-Instead of finding the split points on the sorted feature values, histogram-based algorithm buckets continuous feature values into discrete bins and uses these bins to construct feature histograms during training.
+Thay vì tìm các điểm phân tách trên các giá trị đối tượng được sắp xếp, histogram-based algorithm gộp giá trị đặc trưng liên tục vào các bin rời rạc và sử dụng các bin này để xây dựng histogram đặc trưng lúc đào tạo.
 
 \bigskip
 \begin{algorithm}[H]
@@ -233,59 +234,65 @@ Instead of finding the split points on the sorted feature values, histogram-base
 \end{algorithm}
 \bigskip
 
-As shown in Algorithm \ref{alg:histogram-based}, the histogram-based algorithm finds the best split points based on the feature histograms. 
-It costs $O(\#data \times \#feature)$ for building histogram and $O(\#bin \times \#feature)$ for finding the split point. Since $\#bin$ is usually much smaller than $\#data$, histogram building will control the computational complexity. If we can reduce $\#data$ or $\#feature$, we will be able to speed up the training of GBDT extensively.
+Như thể hiện trong Algorithm \ref{alg:histogram-based}, histogram-based algorithm tìm các điểm best split point đựa trên feature histograms. 
+Nó tốn $O(\#data \times \#feature)$ cho việc xây dựng histogram và $O(\#bin \times \#feature)$ cho việc tìm split point. Do $\#bin$ thì thường nhỏ hơn rất nhiều so với $\#data$, việc xây dựng histogram có thể kiểm soát độ phức tạp của tính toán. Nếu chúng ta có thể giảm $\#data$ hoặc $\#feature$, chúng ta có thể tăng tốc quá trình đào tạo GBDT.
 
 \subsection{Support Vector Machine}
 
-Support Vector Machines (SVM) is another machine learning algorithm that is commonly used for classification problems. The main idea relies on finding such a hyperplane, that would separate the classes in the best way. The term "support vectors" refers to the points lying closest to the hyperplane, that would change the hyperplane position if removed. The distance between the support vector and the hyperplane is referred to as margin.
+Support Vector Machines (SVM) là một thuật toán máy học khác thường được sử dụng cho các vấn đề classification.
+Ý tưởng chính dựa trên việc tìm kiếm một hyperplane, điều đó sẽ tách rời các lớp theo cách tốt nhất.
+Thuật ngữ "support vectors" đề cập đến các điểm nằm gần nhất với hyperplane, điều đó sẽ thay đổi vị trí của hyperplane nếu bị xóa.
+Khoảng cách giữa support vector và hyperplane được gọi là margin.
 
-Intuitively, we know that the further from the hyperplane our groups lie, the more accurate predictions we can get. That is why, although multiple hyperplanes can be found, the goal of the SVM algorithm is to find such a hyperplane that would result in the maximum margins.
+Bằng trực giác, chúng ta biết rằng càng gần hơn đến hyperplane, chúng ta sẽ đạt được độ chính xác cao hơn. 
+Đó là lý do tại sao, mặc dù có thể tìm thấy nhiều hyperplane, mục đích của thuật toán SVM là tìm được hyperplane mà có kết quả tốt đa margin.
 
-SVMs are usually able to produce good accuracy, particularly on clean datasets. 
-Further, it is good at working with the high-dimensional datasets, also when the number of dimensions is higher than the number of the samples. 
-Additionally, for large datasets with a lot of noise or overlapping classes, it can be more effective.
-However, with more massive datasets training time can be extended \cite{jing2010view}.
+SVM thường có khả năng tạo ra độ chính xác cao, đặc biệt là trên các bộ dữ liệu sạch.
+Hơn nữa, nó làm việc tốt với các tập dữ liệu có số lượng đặc trưng lớn, thâm chí khi số lượng các đặc trưng nhiều hơn số lượng các mẫu.
+Ngoài ra, đối với các tập dữ liệu lớn có nhiều lớp nhiễu hoặc chồng chéo, nó có thể hoạt động rất hiệu quả.
+Tuy nhiên, với thời gian đào tạo tập dữ liệu lớn hơn có thể bị quá tải \cite{jing2010view}.
 
 \subsection{K-Nearest Neighbors}
 
-The k-Nearest Neighbors algorithm (k-NN) is a non-parametric method used for classification and regression. 
-The k-NN does not make any assumptions about the data structure, which makes it become a good solution in the real world where most of the data does not follow the typical theoretical assumptions. 
-K-NN is also a lazy algorithm, which means there is no specific training phase or it is very insignificant. 
-Also, lack of generalization means that k-NN keeps all the training data, i.e., the most the training data is required during the testing phase.
+Thuật toán k-Nearest Neighbors (k-NN) là một phương pháp không tham số được sử dụng để phân loại và hồi quy.
+K-NN không đưa ra bất kỳ giả định nào về cấu trúc dữ liệu, làm cho nó trở thành một giải pháp tốt trong thế giới thực, nơi hầu hết dữ liệu không tuân theo các giả định lý thuyết điển hình.
+K-NN cũng là một thuật toán lazy, có nghĩa là không có giai đoạn đào tạo cụ thể hoặc nó là rất không đáng kể. 
+Ngoài ra, thiếu sự khái quát hóa có nghĩa là k-NN giữ tất cả dữ liệu huấn luyện, nghĩa là hầu hết dữ liệu huấn luyện là bắt buộc trong giai đoạn thử nghiệm.
 
-The algorithm is based on feature similarity. 
-How closely out-of-sample features match the training set determines how k-NN classify a given data point.
-The Euclidean Distance,  which is defined by the formula below, is the most used method for continuous variables in k-NN.
+Thuật toán dựa trên tính tương tự về đặc trưng. 
+Các tính năng ngoài mẫu tương ứng chặt chẽ như thế nào với tập huấn luyện sẽ quyết định cách thức phân loại k-NN cho một điểm dữ liệu đã cho.
+Euclidean Distance,  được xác định bởi công thức bên dưới, là phương pháp được sử dụng nhiều nhất cho các biến liên tục trong k-NN.
 
 \begin{center}
 $EuclideanDistance =  \sqrt{ \sum_{i=1}^{n}(q_i - p_i)^2 }$
 \end{center}
 
-The drawback of the k-NN algorithm is the lousy performance on the unevenly distributed datasets. 
-Hence, if one class hugely overshadows the other ones, it is more likely to have more neighbors of that class due to their large number, and therefore, make incorrect predictions \cite{laaksonen1996classification}.
+Hạn chế của thuật toán k-NN là hiệu suất tệ hại trên các bộ dữ liệu được phân phối không đồng đều.
+Do đó, nếu một lớp cực kỳ lấn át những lớp khác, nó có nhiều khả năng có nhiều "hàng xóm" của lớp đó do số lượng lớn, và do đó, đưa ra những dự đoán không chính xác \cite{laaksonen1996classification}.
 
 \subsection{Neural Networks}
 
-\subsubsection{Overview}
+\subsubsection{Tổng quan}
 
-The idea behind neural networks, i.e., having computational units that produce “intelligent” results only through interactions with each other, was inspired by the brain. 
-For instance, the Neocognitron system, proposed by Kunihiko Fukushima in 1980, took inspiration from the mammalian visual system and laid the foundation for modern convolutional networks \cite{goodfellow2016deep}. 
-Hence, the artificial neurons in these networks mimic the structure of biological ones. 
+Ý tưởng đằng sau neural networks được lấy cảm hứng từ bộ não, đó là có đơn vị tính toán tạo ra kết quả “thông minh” chỉ thông qua tương tác với nhau.
+Ví dụ, hệ thống Neocognitron, được đề xuất bởi Kunihiko Fukushima vào năm 1980, lấy cảm hứng từ hệ thống thị giác của động vật có vú và đặt nền tảng cho các mạng chuyển động hiện đại \cite{goodfellow2016deep}. 
+Do đó, các tế bào thần kinh nhân tạo trong các mạng này bắt chước cấu trúc của các sinh vật học.
 
-The very first artificial model of the biological neuron is in fact perceptron, introduced by Frank Rosenblatt in 1958 \cite{rosenblatt1958perceptron}. 
-Perceptron is an algorithm for supervised learning in machine learning. Perceptron, in essence, is a simple function that turns inputs (usually a real-valued vector) into one binary output.
+Mô hình nhân tạo đầu tiên của tế bào thần kinh sinh học thực ra là perceptron, được Frank Rosenblatt giới thiệu vào năm 1958 \cite{rosenblatt1958perceptron}. 
+Perceptron là một thuật toán cho việc học có giám sát trong học máy. 
+Perceptron, về bản chất, là một hàm đơn giản để biến các đầu vào (thường là một vectơ có giá trị thực) thành một đầu ra nhị phân.
 
-\begin{figure}[htbp!] 
+\begin{figure}[H] 
 \centering    
 \includegraphics[width=0.5\textwidth]{perceptron.png}
-\caption{Basic structure of a perceptron \cite{minsky1969perceptron}}
+\caption{Cấu trúc cơ bản của một perceptron \cite{minsky1969perceptron}}
 \label{fig:perceptron}
 \end{figure}
 
-Following Figure \ref{fig:perceptron}, we can see the perceptron receives \textit{p} inputs, $A_1$, $A_2$, ..., $A_p$ (or $x_1$, $x_2$, ..., $x_p$, depending on the source. 
-The inputs are then respectively weighted by $w_1$, $w_2$, ..., $w_p$, which are real numbers indicating the importance of each of the input values. The output \textit{F} will then be calculated using the sum of those weighted inputs. 
-Additionally, because the output is a binary value, a threshold is used to achieve the desired result. To be more specific, a perceptron is written as follows:
+Như trong Hình \ref{fig:perceptron}, chúng ta có thể thấy perceptron nhận \textit{p} inputs, $A_1$, $A_2$, ..., $A_p$ (or $x_1$, $x_2$, ..., $x_p$, tùy thuộc vào nguồn.
+Các yếu tố đầu vào sau đó được điều chỉnh theo trọng số $w_1$, $w_2$, ..., $w_p$, là những con số thực cho thấy tầm quan trọng của mỗi giá trị đầu vào.
+Đầu ra \textit{F} sau đó sẽ được tính bằng cách sử dụng tổng của những đầu vào có trọng số đó. 
+Ngoài ra, bởi vì đầu ra là một giá trị nhị phân, một ngưỡng được sử dụng để đạt được kết quả mong muốn. Để cụ thể hơn, một perceptron được viết như sau:
 
 \begin{center}
 $F = \begin{cases}
@@ -294,9 +301,9 @@ $F = \begin{cases}
 \end{cases}$
 \end{center}
 
-Consequently, the output of a perceptron is controlled by two things: the weights $w_1$, $w_2$, ..., $w_p$ and the Threshold. 
-In modern neuron networks, however, the equation changed a bit by bringing the Threshold to the other side of the inequalities. 
-The additive inverse of Threshold is then known as Bias, and the perception will be rewritten as:
+Do đó, đầu ra của một perceptron được điều khiển bởi hai điều: trọng số $w_1$, $w_2$, ..., $w_p$ và ngưỡng. 
+Tuy nhiên, trong các mạng nơron hiện đại, phương trình đã thay đổi một chút bằng cách đưa Ngưỡng sang phía bên kia của bất phương trình.
+Nghịch đảo phụ của Ngưỡng được gọi là Bias, và công thức sẽ được viết lại như sau:
 
 \begin{center}
 $F = \begin{cases}
@@ -307,52 +314,52 @@ $F = \begin{cases}
 
 \subsubsection{Activation function}
 
-Perceptron is the precursor to modern artificial neurons. Instead of returning only a binary output, an artificial neuron now produces values that are anywhere in the range [0,1]. 
-The reason is to help in the learning process of a network. Neural networks can learn, i.e., finding the appropriate weights and biases given sufficient input data. 
-The learning process, however, needs to be progressive, which means weights and biases get increasingly close to the "good" values. 
-Having a binary output for each of the neurons makes it hard for this process to be done. 
-For training a neural network, we use an error function to see how far or close the network is to the optimal results.
-Because of the binary output of perception, a small change in the network's parameters can lead to a stark difference for the output, making it hard to tune the parameters to achieve a good result. 
-Therefore, modifications must be made to the original perceptron model. 
-Instead of using 0 as the threshold at which signals are allowed to be fired, we can use an activation function to map the output to the range we need appropriately.
+Perceptron là tiền đề cho các artificial neuron hiện đại.
+Thay vì chỉ trả về đầu ra nhị phân, artificial neuron bây giờ tạo ra các giá trị ở bất kỳ đâu trong phạm vi [0, 1].
+Nguyên nhân chính là cải thiện qua trình học của một mạng.
+Neural networks có thể học các tìm ra các trọng số và bias thích hợp cho đủ dữ liệu đầu vào. 
+Quá trình học tập cần phải cải tiến, có nghĩa là trọng số và bias ngày càng gần với các giá trị càng tốt.
+Chỉ có đầu ra nhị phân cho mỗi tế bào thần kinh khiến cho quá trình này khó thực hiện.
+Để huấn luyện một neural network, chúng ta sử dụng một error function để xem cách xa hoặc đóng mạng là kết quả tối ưu hay không.
+Do những đầu ra nhị phân của perception, một thay đổi nhỏ trong các tham số của mạng có thể dẫn đến sự khác biệt rõ rệt cho đầu ra, khiến cho việc điều chỉnh các tham số trở nên khó có thể đạt được kết quả tốt.
+Do đó, sửa đổi phải được thực hiện cho mô hình perceptron gốc. 
+Thay vì sử dụng 0 làm ngưỡng mà tại đó các tín hiệu được phép kích hoạt, chúng ta có thể sử dụng một hàm kích hoạt để ánh xạ đầu ra đến phạm vi mà chúng ta cần một cách thích hợp.
 
-\begin{figure}[htbp!] 
+\begin{figure}[H]
 \centering    
 \includegraphics[width=0.7\textwidth]{artificial_neuron.png}
-\caption{Structure of an artificial neuron \cite{wikian}}
+\caption{Cấu trúc của an artificial neuron \cite{wikian}}
 \label{fig:artificial-neuron}
 \end{figure}
 
-The activation function takes as input the weighted sum of the input values fed to the perceptron and returns a value in the range [0,1]. 
-Historically, the Sigmoid function was used for this purpose as it can squash the sum to the desired range \cite{li2015cs231n}. 
-Modern networks, however, use different functions as well, such as hyperbolic tan function (tanh) or rectified linear unit (ReLU), to achieve better performance \cite{li2015cs231n}.
+Hàm kích hoạt lấy làm đầu vào tổng trọng số của các giá trị đầu vào được nạp vào perceptron và trả về một giá trị trong phạm vi [0,1]. 
+Trong lịch sử, hàm Sigmoid được sử dụng cho mục đích này vì nó có thể cho ra output vào phạm vi mong muốn \cite{li2015cs231n}. 
+Tuy nhiên những mạng bây giờ thì có dùng những hàm khác như là such as hyperbolic tan function (tanh) hoặc rectified linear unit (ReLU), để đạt hiệu năng tốt hơn \cite{li2015cs231n}.
 
-\subsubsection{Feedforward and Backpropagation}
+\subsubsection{Feedforward và Backpropagation}
 
-Two operations are particularly important in neural networks: Feedforward and Backpropagation.
+Hai hoạt động đặc biệt quan trọng trong neural networks: Feedforward và Backpropagation.
 
-Feedforward is used in both the training and testing stage of a network. 
-The task we need to do in feedforward is straightforward: Passing output of a layer as the input of the next layer.
-Since all we are doing is unidirectionally putting values through the network from the input layer to the output layer, the operation is called feedforward. 
+Feedforward được sử dụng trong cả giai đoạn đào tạo và thử nghiệm của mạng.
+Nhiệm vụ chúng ta cần làm trong feedforward rất đơn giản: Truyền đầu ra của một lớp làm đầu vào của lớp tiếp theo.
+Vì tất cả những gì chúng ta đang làm là một chiều đưa các giá trị qua mạng từ lớp đầu vào đến lớp đầu ra, hoạt động này được gọi là feedforward.
 
-Backpropagation is generally used in the training stage to help neural networks learn their parameters, and it is considered an optimization. 
-Different from feedforward, the job of this operation is to propagate error of the output values back to the network to update the network parameters. 
-Backpropagation works by first do the normal feedforward operation on the network with the given input. 
-After the output is obtained, we compare the output to the desired output, using a loss function to generate an error term for each of the neuron in the output layer. 
-The error values are then propagated backward from the output layer until every neuron receive their respective error term. 
-The error terms will be used to calculate the gradient, with which we can update the weights of the network to minimize the loss function as the process repeats. 
-To find the most fitting parameters, gradient descend algorithm is usually applied.
+Backpropagation thường được sử dụng trong giai đoạn đào tạo để giúp các mạng nơron tìm hiểu các tham số của chúng, và nó được xem là một loại tối ưu hóa.
+Khác với feedforward, công việc của thao tác này là truyền lỗi của các giá trị đầu ra trở lại mạng để cập nhật các tham số mạng.
+Backpropagation hoạt động bằng cách đầu tiên thực hiện thao tác feedforward bình thường trên mạng với đầu vào đã cho.
+Sau khi thu được đầu ra, chúng ta so sánh đầu ra với đầu ra mong muốn, sử dụng một loss function để tạo ra một error term cho mỗi nơron trong lớp đầu ra.
+Các giá trị lỗi sau đó được truyền ngược từ lớp đầu ra cho đến khi tất cả các nơron nhận được error term tương ứng của chúng.
+Các error term được sử dụng để tính gradient, cái mà chúng ta có thể cập nhật trọng số của mạng để giảm thiểu loss function khi quá trình lặp lại.
+Để tìm các thông số phù hợp nhất, thuật toán gradient descent thường được áp dụng.
 
 \section{Classification Metrics}
 
-In this section, we review how to use several common metrics that are used to evaluate predictions for classification problems.
+Trong phần này, chúng tôi xem xét cách sử dụng một số chỉ số phổ biến được sử dụng để đánh giá các dự đoán cho các vấn đề về phân loại.
 
 \subsection{Logarithmic Loss}
 
-Logarithmic loss, or log-loss for short, is a performance metric for evaluating the predictions of probabilities of membership to a given class.
-
-Log-loss takes into account the uncertainty of your prediction based on how much it varies from the actual label, which gives us a more nuanced view of the performance of our model.
-In binary classification, with $y$ is a binary indicator (0 or 1) of whether class label $c $is the correct classification and $p$ is the model predicted probability, the formula equals:
+Logarithmic loss, thường gọi tắt là log-loss, là chỉ số hiệu suất để đánh giá các dự đoán về xác suất đối với một lớp nhất định. Log-loss xem xét tính không chắc chắn của dự đoán dựa trên mức độ thay đổi của nó so với nhãn thực tế, điều này cho chúng ta cái nhìn sâu sắc hơn về hiệu suất của mô hình.
+Trong phân loại nhị phân, với $y$ là chỉ báo nhị phân (0 hoặc 1) cho nhãn $c$ là phân loại chính xác và $p$ là mô hình dự đoán xác suất, công thức như sau:
 
 \bigskip
 \begin{center}
@@ -360,8 +367,8 @@ In binary classification, with $y$ is a binary indicator (0 or 1) of whether cla
 \end{center}
 \bigskip
 
-The scalar probability between 0 and 1 can be seen as a measure of confidence for a prediction by an algorithm.
-Smaller log-loss is better with 0 representing a perfect log-loss.
+Xác suất vô hướng giữa 0 và 1 có thể được xem như một thước đo sự tin cậy cho một dự đoán của một thuật toán.
+Giá trị log-loss nhỏ hơn thì tốt hơn, và 0 thể hiện một log-loss hoàn hảo.
 
 \subsection{Confusion Matrix}
 \label{ssec:confusion_matrix}
@@ -373,81 +380,80 @@ Smaller log-loss is better with 0 representing a perfect log-loss.
     \label{fig:confusion_matrix}
 \end{figure}
 
-A clean and unambiguous way to show the prediction results of a classifier is to use a confusion matrix (also called a contingency table).
-For a binary classification problem, the table has two rows and two columns (which is shown in Figure \ref{fig:confusion_matrix}). 
-Across the top is the actual class labels and down the side are the predicted class labels. 
-Each cell carries the number of predictions made by the classifier that fall into that cell.
+Một cách rõ ràng để hiển thị kết quả dự đoán của một trình phân loại là sử dụng confusion matrix (còn được gọi là contingency table).
+Đối với một vấn đề phân loại nhị phân, bảng có hai hàng và hai cột (được thể hiện trong hình \ref{fig:confusion_matrix}). 
+Trên đầu là các nhãn lớp thực tế và xuống bên là các nhãn lớp được dự đoán.
+Mỗi ô chứa số dự đoán được tạo bởi mô hình phân loại nằm trong ô đó.
 
 \begin{figure}[H]
     \centering    
     \includegraphics[width=0.7\textwidth]{confusion_matrix_example.png}
-    \caption{An example of confusion matrix}
+    \caption{Một ví dụ về confusion matrix}
     \label{fig:confusion_matrix_example}
 \end{figure}
 
-Figure \ref{fig:confusion_matrix_example} is an example of binary classification in malware detection. 
-Some of the input files are malware, and our test correctly says they are positive. 
-They are called true positives (TP). 
-In contrast, some are malware, but the test incorrectly claims they are not. 
-They are called false negatives (FN). 
-Some are clean files, and the test says they are not malware – true negatives (TN). 
-Finally, there might be clean files have a positive test result – false positives (FP).
+Hình \ref{fig:confusion_matrix_example} là một ví dụ về phân loại nhị phân trong phát hiện phần mềm độc hại.
+Một số tệp đầu vào là phần mềm độc hại và thử nghiệm của chúng tôi chính xác cho biết chúng là có khả năng. Các kết quả đó gọi là true positives (TP). 
+Ngược lại, khi chúng là malware, nhưng kết quả nói nó không phải. Chúng được gọi là false negatives (FN). 
+Một số là tệp sạch và thử nghiệm cho biết chúng không phải là phần mềm độc hại – true negatives (TN). 
+Cuối cùng, có thể có các tệp sạch sẽ có kết quả xét nghiệm dương tính - false positives (FP).
 
-There are many derived ratios from confusion matrix, and the most common ones are listed below:
+Có nhiều tỷ lệ xuất phát từ confusion matrix và các tỷ lệ phổ biến nhất được liệt kê dưới đây:
 
 \begin{itemize}
-    \item True Positive Rate (TPR), eqv. with hit rate, recall: $TPR = TP/P = TP/(TP + FN)$
+    \item True Positive Rate (TPR), tương đương hit rate, recall: $TPR = TP/P = TP/(TP + FN)$
     \item True Negative Rate (TNR): $SPC = TN/N = TN/(TP + FN)$
-    \item Precision or Positive Predictive Value (PPV): $PPV = TP/(TP + FP)$
+    \item Precision hay Positive Predictive Value (PPV): $PPV = TP/(TP + FP)$
     \item Negative Predictive Value (NPV): $NPV = TN/(TN + FN)$
-    \item Fall-out or False Positive Rate (FPR): $FPR = FP/N = FP/(TP + FN) = 1 - TNR$
+    \item Fall-out hay False Positive Rate (FPR): $FPR = FP/N = FP/(TP + FN) = 1 - TNR$
     \item False Discovery Rate (FDR): $FDR = FN/(FN + TP) = 1 - PPV$
-    \item Miss Rate or False Negative Rate (FNR): $FNR = FN/(FN + TP) = 1 - TPR$
+    \item Miss Rate hay False Negative Rate (FNR): $FNR = FN/(FN + TP) = 1 - TPR$
 \end{itemize}
 
-\subsection{Overall Accuracy}
+\subsection{Độ chính xác tổng thể}
 
-Overall accuracy is the number of correct predictions made as a ratio of all predictions made.
+Độ chính xác tổng thể là tỉ lệ số dự đoán chính xác được thực hiện của tất cả các dự đoán được thực hiện.
 
 \begin{center}
     ${Accuracy} =  \cfrac{True\ positive + True\ negative}{Condition\ positive + Condition\ negative}$
 \end{center}
+Độ chính xác tổng thể về cơ bản cho chúng ta biết tỷ lệ tất cả các dự đoán tham chiếu được ánh xạ chính xác.
+Độ chính xác tổng thể thường được biểu thị bằng phần trăm, với độ chính xác 100\% là một phân loại hoàn hảo, trong đó tất cả các tham chiếu được phân loại chính xác.
+Độ chính xác tổng thể là dễ hiểu và dễ tính toán nhất, nó cung cấp cho người dùng cái nhìn tổng quan về thông tin chính xác cần thiết.
 
-Overall Accuracy essentially tells us out of all of the reference sites what proportion were mapped correctly. 
-The overall accuracy is usually expressed as a percent, with 100\% accuracy being a perfect classification where all reference site were classified correctly. 
-Overall accuracy is the easiest to calculate and understand but ultimately only provides the map user and producer with necessary accuracy information.
+Đây là chỉ số đánh giá phổ biến nhất cho các vấn đề phân loại, nó cũng là chỉ số dễ hiểu lầm nhiều nhất.
+Nó chỉ phù hợp khi có số lượng quan sát ngang nhau trong mỗi lớp (hiếm khi xảy ra)và tất cả các dự đoán và sai số có tầm quan trọng như nhau(thường không phải là trường hợp phổ biến).
 
-This is the most common evaluation metric for classification problems, it is also the most misused. 
-It is only suitable when there is an equal number of observations in each class (which is rarely the case) and that all predictions and prediction errors are equally important (which is often not the case).
+\subsection{Precision và Recall}
 
-\subsection{Precision and Recall}
-
-Precision can be thought of as a measure of a classifiers exactness. Precision attempts to answer the question "What proportion of positive identifications was actually correct?". A low precision can also indicate a large number of False Positives.
+Precision có thể được coi như một thước đo về độ chính xác của bộ phân loại.
+Precision cố gắng trả lời câu hỏi "Tỷ lệ nhận dạng tích cực thực sự chính xác là gì?".
+Một precision thấy cũng có thể chỉ ra một số lượng lớn False Positives.
 
 \begin{center}
     ${Precision} =  \cfrac{True\ positive}{True\ positive + False\ positive}$
 \end{center}
 
-Recall is the number of True Positives divided by the number of True Positives and the number of False Negatives. Computing in another way is the number of positive predictions divided by the number of positive class values in the test data. Recall attempts to answer "What proportion of actual positives was identified correctly?". It is also called Sensitivity or the True Positive Rate.
+Recall là số lượng True Positives chia cho tổng số lượng True Positives và False Negatives. Tính toán theo cách khác là số dự đoán tích cực chia cho số giá trị lớp dương trong dữ liệu thử nghiệm. Recall các nỗ lực để trả lời "Tỷ lệ tích cực thực tế đã được xác định chính xác?". Nó cũng tương đương Sensitivity hoặc True Positive Rate.
 
 \begin{center}
     ${Recall} =  \cfrac{\sum True\ positive}{\sum Condition\ positive}$
 \end{center}
 
-\subsection{Area Under ROC curve}
+\subsection{Diện tích dưới đường cong ROC}
 \label{ssec:auroc}
 
-Area Under the Receiver Operating Characteristic curve, AUROC or AUC for short, is a performance metric for binary classification problems. The AUROC has several equivalent interpretations:
+Phần diện tích dưới đường cong ROC (Area Under the Receiver Operating Characteristic curve, AUROC hay AUC) là chỉ số hiệu suất cho các vấn đề phân loại nhị phân. AUROC có một số cách diễn giải tương đương:
 
 \begin{itemize}
-\item The expectation that a uniformly drawn random positive is ranked before a uniformly drawn random negative.
-\item The expected proportion of positives ranked before a uniformly drawn random negative.
-\item The expected true positive rate if the ranking is split just before a uniformly drawn random negative.
-\item  The expected proportion of negatives ranked after a uniformly drawn random positive.
-\item  The expected false positive rate if the ranking is split just after a uniformly drawn random positive.
+\item Kì vọng một uniformly drawn random positive xếp hạng trên một  a uniformly drawn random negative.
+\item Tỉ lệ positives mong đợi xếp hạng trên một uniformly drawn random negative.
+\item Tỉ lệ true positive rate mong đợi nếu việc xếp hạng được tách trước một a uniformly drawn random negative.
+\item Tỉ lệ negatives mong đợi xếp hạng dưới niihr uniformly drawn random positive.
+\item  Tỉ lệ false positive rate mong đợi nếu việc xếp hạng được tách sau một uniformly drawn random positive.
 \end{itemize}
 
-An area of $1.0$ represents a model that made all predictions perfectly. A rough guide for classifying the accuracy of a classification test is the typical academic point system: 
+Diện tích $1,0$ đại diện cho một mô hình cho tất cả các dự đoán một cách hoàn hảo. Hệ thống điểm học thuật điển hình để phân loại độ chính xác là:
 
 \begin{itemize}
 \item 0.9 - 1.0 = Excellent
@@ -457,48 +463,48 @@ An area of $1.0$ represents a model that made all predictions perfectly. A rough
 \item 0.5 - 0.6 = Fail
 \end{itemize}
 
-\subsubsection{Compute the AUROC}
+\subsubsection{Cách tính AUROC}
 
-Assume we have a binary classifier such as logistic regression. First, we compute two metrics from the confusion matrix (their formula are mentioned in section \ref{ssec:confusion_matrix}), which will be later combined into one:
+Giả sử chúng ta có một mô hình phân lớp nhị phân là logistic regression. Đầu tiên, chúng ta tính hai thước đo từ confusion matrix (công thức của chúng được đề cập trong phần \ref{ssec:confusion_matrix}), sau đó sẽ được kết hợp thành một:
 
 \begin{enumerate}
-    \item \textbf{True positive rate (TPR).} Intuitively this metric agrees to the proportion of positive data points that are correctly considered as positive, with respect to all positive data points. In other words, the higher TPR, the fewer positive data points we will miss.
-    \item \textbf{False positive rate (FPR).} This metric corresponds to the proportion of negative data points that are mistakenly considered as positive, concerning all negative data points. In other words, the higher FPR, the more negative data points will be misclassified.
+    \item \textbf{True positive rate (TPR).} Chỉ số này tương ứng với tỷ lệ các điểm dữ liệu tích cực được coi là dương, đối với tất cả các điểm dữ liệu tích cực. Nói cách khác, TPR càng cao hơn, càng ít các điểm dữ liệu tích cực chúng ta sẽ bỏ lỡ.
+    \item \textbf{False positive rate (FPR).} Số liệu này tương ứng với tỷ lệ các điểm dữ liệu tiêu cực bị nhầm lẫn được coi là dương, liên quan đến tất cả các điểm dữ liệu tiêu cực. Nói cách khác, FPR cao hơn, các điểm dữ liệu tiêu cực sẽ bị phân loại sai.
 \end{enumerate}
 
 \begin{figure}[H]
     \centering    
     \includegraphics[width=0.8\textwidth]{roc_curve.png}
-    \caption{An example of Receiver Operating Characteristic curve}
+    \caption{Một ví dụ của đường cong Receiver Operating Characteristic}
     \label{fig:auroc}
 \end{figure}
 
-Then, we combine the FPR and the TPR into one single metric by computing the two former metrics with many different threshold (for example, 0.00, $10^-5$, $10^-4$, $10^-3$, ..., 1.00, as shown as in Figure \ref{fig:auroc}) for the logistic regression, then plot them on a single graph, with the FPR values on the x-axis and the TPR values on the y-axis. The resulting curve is called  Receiver Operating Characteristic curve, and the metric we consider is the area under this curve.
+Sau đó, chúng ta kết hợp FPR và TPR vào một thước đo bởi việc tính toán hai thước đo này với những ngưỡng khác nhau (ví dụ, $0.00$, $10^-5$, $10^-4$, $10^-3$, ..., $1.00$, như trong hình \ref{fig:auroc})) và vẽ chúng trên một biểu đồ chung, với các giá trị FPR trên cạnh x và các giá trị TPR trên cạnh y. Đường cong có được gọi là Receiver Operating Characteristic curve, và giá trị thước đo của chúng ta chính là diện tích dưới đường cong ROC.
 
 \section{LightGBM - A Gradient Boosting Framework}
 
-LightGBM, which means Light Gradient Boosting Machine, is a gradient boosting framework that uses tree-based learning algorithm \cite{ke2017lightgbm}. This framework is obtaining an extreme reputation due to its following advantages:
+LightGBM, có nghĩa là Light Gradient Boosting Machine, là một gradient boosting framework sử dụng tree-based learning algorithm \cite{ke2017lightgbm}. Framework đạt được sự phổ biến nhờ những ưu điểm sau:
 
 \begin{itemize}
-\item Faster training speed and higher efficiency
-\item Lower-memory usage
-\item Better accuracy
-\item Parallel and GPU learning supported
-\item Capable of handling the large-scale data
+\item Tốc độ đào tạo nhanh hơn và hiệu quả cao hơn
+\item Sử dụng ít bộ nhớ hơn
+\item Độ chính xác tốt hơn
+\item Hỗ trợ chạy song song và GPU
+\item Hỗ trợ xử lý dữ liệu lớn
 \end{itemize}
 
-The framework uses two following techniques to solve problems when the feature dimension is high, and data size is considerable: Gradient-based One-Side Sampling and Exclusive Feature Bundling.
+Framework sử dụng hai kỹ thuật sau đây để giải quyết vấn đề khi số lượng đặc trưng tăng cao và kích thước dữ liệu đáng kể: Gradient-based One-Side Sampling và Exclusive Feature Bundling.
 
 \subsection{Gradient-based One-Side Sampling}
 
-Base on the notice that, while there is no weight for data instance in the gradient-boosting decision tree, data instances with different gradients play different roles in the computation of information gain. 
-In particular, according to the definition of information gain, instances with larger gradients (i.e., under-trained instances) will contribute more to the information gain.
-Since, when subsampling the data instances, to retain the accuracy of information gain estimation, LightGBM tends to keep instances with large gradients (e.g., larger than a pre-defined threshold, or among the top percentiles), and only randomly drops instances with small gradients.
-They proved that such a treatment could lead to a more accurate gain estimation than uniformly random sampling, with the same target sampling rate, especially when the value of information gain has a vast range.
+Dựa trên việc nhận thấy rằng, khi không có trọng số cho cá thể dữ liệu trong gradient-boosting decision tree, các cá thể dữ liệu với các gradient khác nhau đóng vai trò khác nhau trong việc thu thập thông tin (information gain).
+Cụ thể, theo như định nghĩa của information gain, các cá thể với gradient lớn hơn (cụ thể là các cá thể đang được huấn luyện, under-trained instances) sẽ đóng góp nhiều hơn cho việc information gain.
+Do đó, khi subsampling các cá thể dữ liệu, để đạt được độ chính xác dự tính của information gain, LightGBM có xu hướng giữ các cá thể với gradient lớn (ví dụ, lớn hơn một threshold định nghĩa trước, hoặc phần trăm phía trên), và chỉ loại bỏ ngẫu nhiên các cá thể có gradient nhỏ.
+Họ đã chứng minh rằng hướng tiếp cận này dẫn đến một cách thu thập hiệu quả hơn việc uniformly random sampling, trong cùng một target sampling rate, đặc biệt là khi giá trị của information gain có một phạm vi rộng.
 
 \subsection{Exclusive Feature Bundling}
 
-Regularly in real applications, although there are a large number of features, the feature space is quite sparse, which provides the LightGBM a possibility of using a nearly lossless approach to reduce the number of active features.
-In fact, in a sparse feature space, many features are almost exclusive, i.e., they rarely take nonzero values together, e.g., the one-hot encoding features, therefore, the framework could safely bundle such unique features.
-LightGBM uses an efficient algorithm named Exclusive Feature Bundling, which is a greedy algorithm with a constant approximation ratio.
-Specifically, they reduce the optimal bundling problem to a graph coloring problem by taking features as vertices and add edges for every two features if they are not together exclusive.
+Thông thường trong các ứng dụng thực tế, mặc dù có một lượng lớn các đặc trưng, không gian đặc trưng thường thưa thớt, cho phép LightGBM có khả năng sử dụng một cách tiếp cận gần như mất mát để giảm số lượng các đặc trưng.
+Thực tế, trong một không gian đặc trưng thưa thớt, nhiều đặc trưng hầu như tách biệt, cụ thể, chúng hiếm khi cùng nhau bằng 0, ví dụ như những đặc trưng one-hot encoding, do đó, framework có thể đóng gói các đặc trưng tách biệt một cách an toàn.
+LightGBM sử dụng một thuật toán hiệu quả gọi là Exclusive Feature Bundling, đây là một thuật toán tham lam với một tỷ lệ xấp xỉ không đổi.
+Cụ thể, chúng chuyển optimal bundling problem thành a graph coloring problem bằng cách lấy các đối tượng như đỉnh và thêm cạnh cho mỗi hai đối tượng nếu chúng không cùng nhau độc quyền.
