@@ -55,7 +55,7 @@ def vectorize_subset(subset):
         with open(y_path + '.shd256', 'r') as f:
             y_checksum = f.read()
         if X_checksum == sha256_checksum(X_path) and y_checksum == sha256_checksum(y_path):
-            logging.info('"{}" subset is vectorized!'.format(subset))
+            logging.info('"{}" subset is vectorized'.format(subset))
             return
 
     # Allocate storage space
@@ -127,4 +127,4 @@ def vectorize_dataset():
     save_numpy_file('train')
     vectorize_subset('test')
     save_numpy_file('test')
-    logging.info('Dataset is vectorized!')
+    logging.info('Dataset is vectorized')

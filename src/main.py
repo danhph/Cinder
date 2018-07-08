@@ -4,11 +4,15 @@ import os
 from logger import init_logger
 from utils import download_dataset
 from vectorize import vectorize_dataset
+from model import train_model
+from model import evaluate_model
 
 
 def main():
-    download_dataset()
-    vectorize_dataset()
+    # download_dataset()
+    # vectorize_dataset()
+    # train_model()
+    evaluate_model()
 
 
 if __name__ == '__main__':

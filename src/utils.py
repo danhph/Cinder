@@ -48,4 +48,4 @@ def download_dataset():
     else:
         logging.info('Data directory is existed at {}'.format(data_dir))
 
-    logging.info('The dataset is ready!')
+    logging.info('The dataset is ready')
