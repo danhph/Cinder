@@ -9,9 +9,9 @@ from model import evaluate_model
 
 
 def main():
-    # download_dataset()
-    # vectorize_dataset()
-    # train_model()
+    download_dataset()
+    vectorize_dataset()
+    train_model()
     evaluate_model()
 
 
