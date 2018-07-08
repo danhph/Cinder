@@ -7,23 +7,21 @@
 \graphicspath{{Chapter2/Figs/}}
 
 \begin{chapabstract}
-Chapter \ref{chap:introduction} presents the overview of applying Machine Learning in Static Malware Detection on Windows operating systems; the motivation and the objectives of the thesis; list the related researches of authors either in Vietnam or over the world.
+Chapter \ref{chap:introduction} presents an overview of applying Machine Learning in Static Malware Detection on Windows operating systems; the motivation and the objectives of the thesis; list of the related researches of authors either in Vietnam or over the world.
 \end{chapabstract}
 
 \section{Overview}
 \label{sec:overview}
 
-Malware is software designed to infiltrate or harm a computer system without the owner's informed consent. 
-A simple classification of malware is the recognizing malware files and clean files. 
+Malware is a software designed to infiltrate or harm a computer system without the owner's informed consent. 
+A simple classification of malwares is recognizing malware files and clean files. 
 Static malware detection is classifying samples as malicious or benign without executing them. 
 In contrast, dynamic malware detection detects malware based on its runtime behavior \cite{athiwaratkun2017malware, dahl2013large}. 
 Although static malware detection is well-known to be undecidable in general \cite{cohen1987computer}, it is a critical layer in a security suite because when successful, it allows identifying malicious files before execution.
 
 Besides, machine learning is an attractive tool for either a first detection capability or additional detection heuristics (section \ref{ssec:machine-learning-intro}).
-Supervised learning models automatically find out complex relationships between file attributes in training data that are distinguishing between malicious and benign samples (section \ref{ssec:supervised-learning}).
+Supervised-learning models automatically find out complex relationships between file attributes in training data that are distinguished between malicious and benign samples (section \ref{ssec:supervised-learning}).
 Moreover, machine learning models generalize to new dataset whose features and labels follow a similar pattern to the training data. 
-
-Additionally, in Windows operating systems, the general format for malware is Portable Executable (PE) format (section \ref{sec:pe-file}), which is the file format for executables, object code, DLLs, FON Font files, and others used in both 32-bit and 64-bit versions. The PE format encapsulates the information necessary for the Windows operating system loader to manage the wrapped executable code.
 
 Therefore, various machine learning-based static Portable Executable (PE) malware detectors have been proposed since at least 1995 \cite{kephart1995biologically,schultz2001data,kolter2006learning,Shafiq2009AFF,saxe2015deep}.
 In 2001, Schultz et al. \cite{schultz2001data} represented PE files by features that included imported functions, strings, and byte sequences. 
@@ -40,15 +38,15 @@ Legal restrictions are the primary challenge for releasing a benchmark dataset f
 Additionally, unlike images, text and speech which may be labeled approximately instantly, and in many cases by a non-expert determining, whether a binary file is malicious or benign can be a time-consuming process for even the well-trained. 
 The work of labeling may be automated via anti-malware, but the results may be proprietary or otherwise protected. Hence, these models may not impress with balanced data \cite{chawla2009data}.
 
-Furthermore, a productive method, which has impressive accuracy and very-low false positive rate, prevents the massive losses from malware, also gives a pleasant user experience and save resources for many organizations.
+Furthermore, a productive method, which has impressive detection rate and very-low false positive rate, prevents the massive losses from malware, also gives a pleasant user experience and save resources for many organizations.
 
 \section{Objectives}
 \label{sec:objectives}
 
 As mentioned in section \ref{sec:motivation}, the result from many proposed methods may not be impressive when evaluating with balanced data. 
-Since the primary objective of this thesis is to \textbf{apply the machine learning methods in malware detection with an balanced dataset}. 
-Additionally, the expected objective is to propose an method with \textbf{a high detection rate} and \textbf{an extremely low false alarm rate}. 
-Ultimately, we aim the knowledge of machine learning and how to apply them to enhance the user information security in solving the malware detection problem. 
+Therefore, the primary objective of this thesis is to \textbf{apply the machine learning methods in malware detection with an balanced dataset}.
+Additionally, the expected objective is to propose a method, which \textbf{maximizes the detection rate} and at the same time \textbf{minimizes the false alarm rate}. 
+Ultimately, we aim the knowledge of machine learning and how to apply them to enhance the user information security at solving the malware detection problem. 
 
 The detailed work that  we have done in this thesis includes:
 \begin{itemize}

@@ -5,13 +5,13 @@
 This chapter describes the issues of using imbalanced Dataset, feature extraction methods, the proposed Gradient Boosting Decision Trees model, and the reasoning behind.
 \end{chapabstract}
 
-\section{The Issues of using Imbalanced Dataset}
+\section{Issues of using Imbalanced Dataset}
 
-Most of the related work use the imbalanced dataset \cite{saxe2015deep,vu2017metamorphic}. 
+Most of the related works use the imbalanced dataset \cite{saxe2015deep,vu2017metamorphic}. 
 For examples, Saxe and Berlin used the dataset of 431,926 binaries which consists 350,016 malicious files \cite{saxe2015deep}, Vu Thanh Nguyen et al. used the dataset of 9690 files which only has 300 benign files \cite{vu2017metamorphic}. 
 In fact, the number of malicious files is often much more massive than the number of benign files because almost benign binaries are often protected by the copyright laws which do not allow for sharing. 
 This makes malware identification problem become different from other machine learning classification problems, which commonly have fewer samples in important classes. 
-Further, the size of the dataset is usually not large enough because the malware analysis and data labeling are consuming processes that required well-trained security engineers. 
+Furthermore, the size of the dataset is usually not large enough because the malware analysis and data labeling are consuming processes that required well-trained security engineers. 
 There are also many risks in publishing a large dataset that includes malicious binaries. 
 
 Using imbalanced datasets can make validation metrics misleading.
@@ -34,9 +34,11 @@ We use three groups of features to model the contents of input files in a file-f
 
 \subsubsection{Byte-Entropy Histogram}
 
-Based on the work published by Joshua Saxe and Konstantin Berlin \cite{saxe2015deep}, they show that, in practice, the effect of representing byte values in the entropy context in which they occur separates byte values that arise in the context of, for example, x86 instruction data from, for example, byte values occurring in compressed data.
-
-To compute the byte-entropy histogram, we slide a 2048-length window over all the input bytes with a step size of 1024 bytes. Use a simple trick to calculate the entropy $H$ faster, i.e., reducing the information by half, and pairing it with each byte within the window. Then, we compute a two-dimensional histogram with $16 \times 16$ bins that quantize entropy and the byte value. Finally, we concatenate each row vector in the matrix and normalize the final 256-value vector.
+The work \cite{saxe2015deep} shows that, in practice, representing byte values in the entropy "context", in which they occur, separates byte values from the context of effectively. 
+To compute the byte-entropy histogram, we slide a 2048-length window over all the input bytes with a step size of 1024 bytes. 
+Use a simple trick to calculate the entropy $H$ faster, i.e., reducing the information by half, and pairing it with each byte within the window. 
+Then, we compute a two-dimensional histogram with $16 \times 16$ bins that quantize entropy and the byte value. 
+Finally, we concatenate each row vector in the matrix and normalize the final 256-value vector.
 
 \subsubsection{Byte Histogram}
 
@@ -76,8 +78,12 @@ Properties of each section are used: the name, size, entropy, virtual size, and 
  
 For classification, in this study, we use the Gradient Boosting Decision Trees algorithm with 400 iterations and 64 leaves in one tree. We configure that there must be at least 200 samples in one child, and set learning rate at 5 percent. We elaborate on the reasoning behind these choices below.
 
-Firstly, the massive number of features causes scalability issues for many machine learning algorithms.  For example,  non-linear  SVM  kernels require $O(N^2)$ multiplication during each iteration, and k-Nearest Neighbors (k-NN) requires significant computation and storage of all label samples during prediction. Accordingly, we target to use neural networks and ensemble decision trees, which are scalable alternatives.
+Firstly, the massive number of features causes scalability issues for many machine learning algorithms.
+ For example, non-linear SVM kernels require $O(N^2)$ multiplication during each iteration, and k-Nearest Neighbors (k-NN) requires significant computation and storage of all label samples during prediction. Accordingly, we target to use neural networks and ensemble decision trees, which are scalable alternatives.
 
-Secondly, our resources, primarily financial support, are lacking. But the cost for training neural networks is extremely computationally expensive. We tried with some complex models, and these take many hours and require costly more GPUs for speeding. Also, neural networks are the black-box that not much can be gleaned from and required much experience to optimize.
+Secondly, our resources, primarily financial support, are lacking. 
+But the cost for training neural networks is extremely computationally expensive. 
+We tried with some complex models, and these take many hours and require costly more GPUs for speeding. 
+Also, neural networks because they are the black boxes that requires much experience to optimize.
 
-Besides, another scalable alternative, tree ensemble algorithms handle very well high dimensional feature spaces as well as a large number of training examples. The two most popular algorithms are Random Forests and Gradient Boosting Decision Trees (GDBT). GBDT training usually takes longer because trees are built sequentially. However, benchmark results have shown GBDT are better learners than Random Forests.
+Besides, another scalable alternative, tree ensemble algorithms handle very well high dimensional feature spaces as well as a large number of training examples. The two most popular algorithms are Random Forests and Gradient Boosting Decision Trees (GDBT). GBDT training usually takes longer because trees are built sequentially.
