@@ -1,0 +1,122 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[paper=a4paper,top=30mm,bottom=35mm,left=35mm,right=20mm]{geometry}
+\usepackage[fontsize=13pt]{scrextend}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese,english]{babel}
+
+\renewcommand\baselinestretch{1.5}
+
+\parindent 0pt
+\parskip 5pt
+\pagestyle{plain}
+
+\title{Research Proposal}
+\author{Danh Pham}
+\date{2018-03-26}
+
+\usepackage[pdftex]{graphicx}
+\newcommand{\timeline}{\hspace{-2.3pt}$\bullet$ \hspace{5pt}}
+
+\newcommand{\namelistlabel}[1]{\mbox{#1}\hfil}
+\newenvironment{namelist}[1]{%1
+\begin{list}{}
+    {
+        \let\makelabel\namelistlabel
+        \settowidth{\labelwidth}{#1}
+        \setlength{\leftmargin}{1.1\labelwidth}
+    }
+  }{%1
+\end{list}}
+
+\begin{document}
+
+\begin{center}
+\textbf{VIETNAM NATIONAL UNIVERSITY HO CHI MINH CITY} \\[2mm]
+\textbf{UNIVERSITY OF INFORMATION TECHNOLOGY} \\ [2mm]
+\textbf{FACULTY OF SOFTWARE ENGINEERING} \\ [1cm]
+\includegraphics[width=30mm]{UIT_Logo} \\
+\vspace{0.5cm}
+\Large \textbf{THESIS PROPOSAL}
+\vspace{0.5cm}
+\end{center}
+
+
+\begin{namelist}{Information}
+\item[{\bf Title:}]
+	\textbf{ \large Deep Learning in Windows Malware Detection}
+\item[{\bf Advisor:}]
+	\begin{otherlanguage}{vietnamese}
+	Assoc Prof. Dr. Vũ Thanh Nguyên
+	\end{otherlanguage}
+\item[{\bf Student:}]
+	\begin{otherlanguage}{vietnamese}
+	Phạm Hữu Danh - 14520134
+	\end{otherlanguage}
+\item[{\bf Degree:}]
+	Bachelor of Software Engineering
+\end{namelist}
+
+\section*{Introduction}
+
+Malware is short for malicious software and is typically used as a catch-all term to refer to any software designed to cause damage to a single computer, server, or computer network \cite{moir2003defining}. In general, malwares are classified into the following categories \cite{egele2012survey}: worms, viruses, backdoors, Trojan horses, bots, rootkits, and spyware. A single incident of malware can cause millions of dollars in damage, e.g., zero-day ransomware WannaCry has caused world-wide catastrophe, from knocking U.K. National Health Service hospitals offline to shutting down a Honda Motor Company in Japan \cite{DBLP:journals/corr/abs-1709-08753}. Furthermore, malware is getting more sophisticated and more varied each day \cite{shahi2009technology}. Therfore, The detection of malicious software is an important problem in cyber security, especially as more of society becomes dependent on computing systems.
+
+The current generation of malware detection products typically uses rule-based or signature-based approaches, which require analysts to handcraft rules that reason over relevant data to make detections. This approach has high accuracy, however, these rules are generally specific, and usually unable to recognize new malware even if it uses the same functionality. That is why the need for machine learning-based detection arises.
+
+Machine learning algorithms learn the underlying patterns from a given training set, which includes both malicious and benign samples. These underlying patterns discriminate malware from benign code. Schultz et al. \cite{Schultz:2001:DMM:882495.884439} first applied machine learning methods to malware detection. They showed that compared with signature-based methods, machine learning methods yield more accurate classification results. 
+
+However, the main drawback of classical machine learning-based approaches is to accomplish accurate detection, since it is difficult to analyze complex and longer sequences of malicious behaviors, especially when malicious and benign behaviors are interposed. In contrast, deep learning models are capable of analyzing longer sequences of system calls and making better decisions through higher-level information extraction and semantic knowledge learning \cite{7946997}.
+
+\section*{Motivation}
+
+Many deep learning-based malware detection methods was presented, i.e., Tian et al. \cite{5665796} recorded the API sequences of binaries using the tool HookMe and proposed a scalable approach for distinguishing malicious files using the features extracted from logs of various API calls; Saxe and Berlin \cite{DBLP:journals/corr/SaxeB15} used a deep feed-forward neural network consisting of four layers with binary features of Windows portable executable (PE) files to detect malware; Yuxin et al. \cite{Yuxin2017MalwareDB} represented malware as opcode sequences and detect it using a deep belief network which can use unlabeled data to pretrain a multi-layer generative model.
+
+Understanding how machine learning works in general and keeping track of state-of-the-art approaches emerging in the cybersecurity field can help organizations cope well with the increased sophistication and complexity of cyber attacks, especially those performed by advanced persistent threats (APT), which are multi-module, stealthy, and target- focused \cite{7946997}.
+
+\section*{Objective}
+
+The main objective of this thesis is to build a malware detection system for Windows platform based on the recommended deep learning methods, as well as the guidelines for its implementation. Specifically, I will build the system with a deep learning model which uses both features extracted from the Cuckoo Sandbox \cite{guarnieri2013cuckoo} and raw byte sequences \cite{2017arXiv171009435R}.
+
+The dataset used for this thesis was published in Microsoft Malware Classification Challenge 2015 \cite{2018arXiv180210135R}, which is almost half a terabyte when uncompressed and consists of a set of known malware files representing a mix of 9 different families.
+
+Besides, the study performed can be useful as a base for further research in the field of malware analysis with machine learning methods. 
+
+\section*{Research timelines}
+
+\scalebox{1.2}{
+\begin{tabular}{r |@{\timeline} l}
+05 Mar - 15 Apr 2018 & Research about machine learning / deep \\
+& learning methods in malware detection. \\
+16 Apr - 15 May 2018 & Conduct experiments on various datasets \\
+ & and configurations. \\
+16 May - 15 Jun 2018 & Build applications. \\
+16 Jun - 30 Jun 2018 & Completing experiments and writing thesis.
+\end{tabular}
+}
+
+\vspace{1.5cm}
+
+{\centering{
+\begin{tabular}{p{0.55\textwidth}cp{0.45\textwidth}}
+\centering{\bfseries{Approved by the advisor}} & \bfseries{Ho Chi Minh City, March 26, 2018} \\
+\centering{\textit{Signature of advisor}} & \textit{Signature of student} \\
+\vspace{3cm} \\
+  \centering{\bfseries{
+  \begin{otherlanguage}{vietnamese}
+  Assoc Prof. Dr. Vũ Thanh Nguyên
+  \end{otherlanguage}
+  }} & \centering{\bfseries{
+  \begin{otherlanguage}{vietnamese}
+  Phạm Hữu Danh
+  \end{otherlanguage}
+  }}
+\end{tabular}
+}}
+
+
+\vfill
+\bibliographystyle{acm}
+\renewcommand{\refname}{References}
+\bibliography{references}
+
+\end{document}

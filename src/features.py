@@ -340,7 +340,7 @@ class HeaderFileInfo(FeatureType):
 
 
 class StringExtractor(FeatureType):
-    ''' Extracts strings from raw byte stream '''
+    """ Extracts strings from raw byte stream """
 
     name = 'strings'
     dim = 1 + 1 + 1 + 96 + 1 + 1 + 1 + 1 + 1

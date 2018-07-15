@@ -51,6 +51,9 @@ class CinderGUI(ttk.Frame):
                          ".drv", ".efi", ".exe", ".mui",
                          ".ocx", ".scr", ".sys", ".tsp")),))
 
+        if len(selected_files) == 0:
+            return
+
         cell_index = ttk.Label(self.table_result, text="#", font='Arial 16 bold')
         cell_index.grid(row=0, column=0, sticky='nsew')
         cell_index.configure(anchor="center")

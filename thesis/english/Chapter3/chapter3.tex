@@ -480,3 +480,27 @@ Regularly in real applications, although there are a large number of features, t
 In fact, in a sparse feature space, many features are almost exclusive, i.e., they rarely take nonzero values together, e.g., the one-hot encoding features, therefore, the framework could safely bundle such unique features.
 LightGBM uses an efficient algorithm named Exclusive Feature Bundling, which is a greedy algorithm with a constant approximation ratio.
 Specifically, they reduce the optimal bundling problem to a graph coloring problem by taking features as vertices and add edges for every two features if they are not together exclusive.
+
+\section{Open Neural Network Exchange (ONNX)}
+\label{sec:onnx}
+ 
+Facebook and Microsoft introduced Open Neural Network Exchange (ONNX) format, a standard for representing deep learning models that enables models to be transferred between frameworks. 
+ONNX is an open source format that empowers AI developers to choose the right tools as their project evolves.
+ 
+At a high level, ONNX is designed to allow framework interoperability. There are many excellent machine learning frameworks, ones of them make use of static graphs ((such as CNTK, Caffe2, Theano, and TensorFlow), while others use dynamic graphs (such as PyTorch and Chainer).
+The graph serves as an Intermediate Representation (IR) that captures the specific intent of the developer's source code and is conducive for optimization and translation to run on particular devices (CPU, GPU, FPGA, etc.).
+By providing a common Intermediate Representation of the computation graph, ONNX helps developers choose the right framework for their task, allows authors to focus on innovative enhancements, and enables hardware vendors to streamline optimizations for their platforms.
+ 
+\section{Windows ML}
+ 
+Windows ML is a platform that evaluates trained machine learning models on Windows 10 devices, allowing developers to use machine learning within their Windows applications. 
+Some highlights of Windows ML include:
+ 
+\begin{itemize}
+\item Hardware acceleration: On DirectX12 capable devices, Windows ML accelerates the evaluation of deep learning models using the GPU. Additionally, CPU optimizations enable high-performance evaluation of both classical machine learning and deep learning algorithms.
+\item Local evaluation: Windows ML evaluates on local hardware, removing concerns of connectivity, bandwidth, and data privacy. The local evaluation also enables low latency and high performance for quick evaluation results.
+\item Image processing: For computer vision scenarios, Windows ML simplifies and optimizes the use of the image, video, and camera data by handling frame pre-processing and providing camera pipeline setup for model input.
+\end{itemize}
+ 
+To use Windows ML, the developers need a pre-trained machine learning model in the Open Neural Network Exchange (ONNX) format, that is mentioned in section \ref{sec:onnx}. 
+Windows ML supports the v1.0 release of the ONNX format, which allows developers to use models produced by different frameworks.

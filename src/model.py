@@ -45,6 +45,7 @@ def evaluate_model():
     model_path = os.path.join(os.getcwd(), "model.txt")
     roc_curve_path = os.path.join(os.getcwd(), 'roc_curve.png')
     score_dist_path = os.path.join(os.getcwd(), 'score_dist.png')
+    dataset_path = os.path.join(os.getcwd(), 'dataset.png')
     data_dir = os.path.join(os.getcwd(), "ember")
     np.random.seed(2018)
 
@@ -110,20 +111,16 @@ def evaluate_model():
     plt.title('Scores for testing samples')
     plt.savefig(score_dist_path)
 
-    # N = 5
-    # menMeans = (20, 35, 30, 35, 27)
-    # womenMeans = (25, 32, 34, 20, 25)
-    # menStd = (2, 3, 4, 1, 2)
-    # womenStd = (3, 5, 2, 3, 3)
-    # ind = np.arange(N)  # the x locations for the groups
-    # width = 0.35  # the width of the bars: can also be len(x) sequence
-    #
-    # p1 = plt.bar(ind, menMeans, width, yerr=menStd)
-    # p2 = plt.bar(ind, womenMeans, width,
-    #              bottom=menMeans, yerr=womenStd)
-    #
-    # plt.ylabel('Scores')
-    # plt.title('Scores by group and gender')
-    # plt.xticks(ind, ('G1', 'G2', 'G3', 'G4', 'G5'))
-    # plt.yticks(np.arange(0, 81, 10))
-    # plt.legend((p1[0], p2[0]), ('Men', 'Women'))
+    plt.clf()
+    maliciousNum = (100000, 300000)
+    benignNum = (100000, 300000)
+    ind = np.arange(2)  # the x locations for the groups
+    width = 0.5  # the width of the bars: can also be len(x) sequence
+    plt.figure(figsize=(6, 8))
+    p1 = plt.bar(ind, maliciousNum, width)
+    p2 = plt.bar(ind, benignNum, width, bottom=maliciousNum)
+    plt.xlabel('Subset')
+    plt.xticks(ind, ('test', 'train'))
+    plt.yticks(np.arange(1, 7) * 100000, ['{}K'.format(i) for i in np.arange(1, 7) * 100])
+    plt.legend((p1[0], p2[0]), ('malicious', 'benign'), prop={'size': 16}, loc='upper left')
+    plt.savefig(dataset_path)

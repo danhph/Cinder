@@ -12,7 +12,7 @@ In our experiment, we use 600,000 labeled training samples and 200,000 testing s
 
 \begin{figure}[H] 
 \centering
-\includegraphics[width=0.5\textwidth]{dataset.png}
+\includegraphics[width=0.8\textwidth]{dataset.png}
 \caption{Distribution of samples in the dataset.}
 \label{fig:ember}
 \end{figure}
@@ -57,14 +57,14 @@ A rough guide for classifying the accuracy of a classification test is the typic
 
 The proposed GBDT-based malware detection method is implemented with LightGBM framework \cite{ke2017lightgbm}, and the input feature vectors have dimension of 1711. All our experiments were run on an instance which has 24 vCPUs and 32 GB memory. Using parallel programming, it took about 10 minutes to vectorize the raw features and about 5 minutes to train the model. The ROC curve of the final model is shown in Figure \ref{fig:roc_curve_with_highlights} and the distribution of scores for testing samples is shown in Figure \ref{fig:score_dist}.
 
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{roc_curve_with_highlights.png}
 \caption{The ROC curve of proposed model}
 \label{fig:roc_curve_with_highlights}
 \end{figure}
 
-\begin{figure}[H] 
+\begin{figure}[ht] 
 \centering
 \includegraphics[width=\textwidth]{score_dist.png}
 \caption{The distribution of scores for testing samples}
@@ -75,7 +75,7 @@ The area under ROC curve exceeds $0.999678$, which means that almost all the pre
 
 The baseline model has only the area under the ROC curve of $0.99911$, score results in less than $0.1\%$ FPR at TPR exceeding $92.99\%$, and at less than $1\%$ FPR, it exceeds $98.2\%$ TPR. Our model has better performance because of hyper-parameter tuning, and it also takes less time for training as a result of reducing feature space. Evidently, the model has better performance than the MalConv model trained on the raw binaries \cite{anderson2018ember}, which has ROC AUC is $0.99821$, corresponding to a $92.2\%$ TPR at a FPR less than 0.1\%, and a 97.3\% TPR at a less than 1\% FPR. Table \ref{table:training-time} and Table \ref{table:results} show the training time and evaluation results of our proposed model in comparison with MalConv model and the dataset owners’ baseline model.
 
-\begin{table}[H]
+\begin{table}[ht]
 \caption{The training time of our proposed model in comparison with MalConv model and the dataset owners’ baseline model}
 \centering
 \label{table:training-time}
@@ -90,7 +90,7 @@ Our model & \textbf{1711}-value vectors & \begin{tabular}[c]{@{}l@{}} 24 vCPUs \
 \end{tabular}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[ht]
 \caption{The evaluation results of our proposed model in comparison with MalConv model and the dataset owners’ baseline model}
 \centering
 \label{table:results}
@@ -103,8 +103,8 @@ Model                      & \begin{tabular}[c]{@{}c@{}}False Alarm Rate\\ (FPR)
                            & 1.0 \%                 & 97.300 \%            &                                                                           \\
 \multirow{2}{*}{EMBER}     & 0.1 \%                 & 92.990 \%            & \multirow{2}{*}{0.999110}                                                 \\
                            & 1.0 \%                 & 98.200 \%            &                                                                           \\
-\multirow{2}{*}{Our model} & 0.1 \%                 & 97.572 \%            & \multirow{2}{*}{0.999678}                                                 \\
-                           & 1.0 \%                 & 99.394 \%            &                                                                          
+\multirow{2}{*}{Our model} & 0.1 \%                 & \textbf{97.572 \%}   & \multirow{2}{*}{\textbf{0.999678}}                                                 \\
+                           & 1.0 \%                 & \textbf{99.394 \%}   &                                                                          
 \\
 \hline 
 \end{tabular}
